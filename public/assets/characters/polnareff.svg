@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 520 760" width="520" height="760">
+    <defs>
+      <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+     <feTurbulence type="fractalNoise" baseFrequency="1" numOctaves="4" stitchTiles="stitch"/>
+     <feColorMatrix type="saturate" values="0"/>
+     <feComponentTransfer><feFuncA type="linear" slope="0.22"/></feComponentTransfer>
+     <feComposite operator="in" in2="SourceGraphic"/>
+   </filter>
+      <filter id="shadow" x="-25%" y="-25%" width="160%" height="160%">
+        <feDropShadow dx="0" dy="14" stdDeviation="16" flood-color="#242326" flood-opacity="0.35"/>
+      </filter>
+      <clipPath id="body"><path d="M 62 700 v -92 c 0 -84 74 -128 158 -142 h 80 c 84 14 158 58 158 142 v 92 Z M 260 178 c 74 0 126 56 126 138 c 0 96 -56 156 -126 156 s -126 -60 -126 -156 c 0 -82 52 -138 126 -138 Z"/></clipPath>
+    </defs>
+
+    <!-- die-cut sticker: white border painted under the fill -->
+    <g filter="url(#shadow)" paint-order="stroke fill" stroke="#FFFFFF" stroke-width="26"
+       stroke-linejoin="round">
+      <path d="M 62 700 v -92 c 0 -84 74 -128 158 -142 h 80 c 84 14 158 58 158 142 v 92 Z M 260 178 c 74 0 126 56 126 138 c 0 96 -56 156 -126 156 s -126 -60 -126 -156 c 0 -82 52 -138 126 -138 Z" fill="#8E97A8"/>
+      <rect x="130" y="42" width="260" height="150" rx="14" fill="#8E97A8"/>
+    </g>
+
+    <g clip-path="url(#body)">
+      <rect width="520" height="760" filter="url(#grain)" fill="#242326" opacity="0.2"/>
+      <path d="M 0 418.00000000000006 Q 260 334.4 520 440.79999999999995 V 760 H 0 Z"
+            fill="#242326" opacity="0.14"/>
+    </g>
+
+    <!-- name plate -->
+    <g transform="translate(260 686)">
+      <rect x="-176" y="-34" width="352" height="74" rx="8" fill="#FBF7F1" stroke="#242326"
+            stroke-width="5"/>
+      <text x="0" y="4" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
+            font-size="27" font-weight="700" letter-spacing="2" fill="#242326">POLNAREFF</text>
+      <text x="0" y="28" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
+            font-size="13" letter-spacing="5" fill="#7D7885">PART 3 · PLACEHOLDER ART</text>
+    </g></svg>

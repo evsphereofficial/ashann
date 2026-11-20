@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 700" width="1100" height="700">
+    <defs>
+      <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="#FDECEA"/>
+        <stop offset="100%" stop-color="#F7CFC8"/>
+      </linearGradient>
+      <filter id="grain" x="-10%" y="-10%" width="120%" height="120%">
+     <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="4" stitchTiles="stitch"/>
+     <feColorMatrix type="saturate" values="0"/>
+     <feComponentTransfer><feFuncA type="linear" slope="0.28"/></feComponentTransfer>
+     <feComposite operator="in" in2="SourceGraphic"/>
+   </filter>
+    </defs>
+    <rect width="1100" height="700" fill="url(#bg)"/>
+    <g>
+        <rect x="88" y="140" width="924" height="420"
+              rx="10" fill="none" stroke="#C0392B" stroke-width="6" stroke-dasharray="18 12" opacity="0.7"/>
+        <path d="M 550 140 v 420" stroke="#C0392B" stroke-width="4"
+              stroke-dasharray="10 10" opacity="0.6"/>
+        <circle cx="550" cy="350" r="70" fill="#C0392B" opacity="0.3"/></g>
+    <rect width="1100" height="700" filter="url(#grain)" fill="#C0392B" opacity="0.16"/>
+    <rect x="0" y="0" width="1100" height="700" fill="none" stroke="#C0392B" stroke-width="10"
+          opacity="0.35"/>
+    <text x="550" y="654" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
+          font-size="39" letter-spacing="6" fill="#C0392B" opacity="0.75">
+      TICKET STUB · REPLACE ME
+    </text>
+    
+  <g transform="translate(66 42) rotate(-6)" opacity="0.85">
+    <rect x="0" y="0" width="176" height="30" rx="4" fill="none" stroke="#B85E75" stroke-width="3"/>
+    <text x="88" y="21" text-anchor="middle" font-family="Helvetica, Arial, sans-serif"
+          font-size="14" font-weight="700" letter-spacing="3" fill="#B85E75">PLACEHOLDER</text>
+  </g></svg>

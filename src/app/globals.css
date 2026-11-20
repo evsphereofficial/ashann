@@ -1,26 +1,400 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* =========================================================================
+   Six Months, One Little Universe — design tokens
+   Palette validated against supplied references + Pinterest research
+   (docs/pinterest-research.md). Six visual modes share these tokens so the
+   scenes stay related while each keeps its own density and mood.
+   ========================================================================= */
+
+@theme {
+  /* Paper stock */
+  --color-paper: #f7f1e9;
+  --color-paper-deep: #efe4d6;
+  --color-paper-dim: #e3d5c4;
+  --color-kraft: #c9a87c;
+  --color-kraft-deep: #a9855a;
+
+  /* Romance */
+  --color-blush: #f2c9d2;
+  --color-blush-soft: #f9e3e8;
+  --color-rose: #b85e75;
+  --color-rose-deep: #8e3e56;
+  --color-raspberry: #a83a5a;
+
+  /* Cool counterpoints */
+  --color-powder: #c7d9e8;
+  --color-powder-deep: #6e93b8;
+  --color-steel: #3f6489;
+  --color-mint: #c9e4d9;
+
+  /* Ink */
+  --color-ink: #242326;
+  --color-ink-soft: #4a4750;
+  --color-ink-faint: #7d7885;
+
+  /* Accents */
+  --color-gold: #c9a227;
+  --color-burgundy: #7a2128;
+  --color-valentine: #c0392b;
+  --color-cream: #fbf7f1;
+
+  /* Type */
+  --font-serif: var(--font-fraunces), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-hand: var(--font-caveat), "Segoe Script", cursive;
+  --font-display: var(--font-anton), "Arial Narrow", Impact, sans-serif;
+
+  /* Motion */
+  --ease-paper: cubic-bezier(0.22, 0.68, 0.24, 1);
+  --ease-settle: cubic-bezier(0.16, 1.02, 0.3, 1);
+  --ease-snap: cubic-bezier(0.6, -0.28, 0.34, 1.4);
+
+  /* Layering */
+  --shadow-paper: 0 1px 2px rgb(36 35 38 / 0.08), 0 8px 20px -10px rgb(36 35 38 / 0.35);
+  --shadow-lifted: 0 2px 4px rgb(36 35 38 / 0.1), 0 22px 40px -18px rgb(36 35 38 / 0.5);
+  --shadow-object: 0 12px 24px -12px rgb(36 35 38 / 0.55);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+/* =========================================================================
+   Base
+   ========================================================================= */
+
+* {
+  -webkit-tap-highlight-color: transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  color-scheme: light;
+  /* Next 16 does not override this during navigation unless declared;
+     we want deliberate, non-hijacked scrolling only inside the shell. */
+  scroll-behavior: auto;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #efe4d6;
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  overscroll-behavior-y: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Focus: visible on every interactive scrapbook object. */
+:focus-visible {
+  outline: 3px solid var(--color-rose);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: var(--color-blush);
+  color: var(--color-ink);
+}
+
+/* Scrollbar kept quiet so it never competes with the collage. */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(184 94 117 / 0.45) transparent;
+}
+
+/* =========================================================================
+   Material primitives — every texture here is generated locally.
+   No third-party image rights are involved.
+   ========================================================================= */
+
+/* Aged paper grain via SVG turbulence, inlined so it ships with the CSS. */
+.material-paper {
+  background-color: var(--color-paper);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E"),
+    radial-gradient(120% 90% at 12% 6%, rgb(255 255 255 / 0.75), transparent 55%),
+    radial-gradient(100% 80% at 88% 96%, rgb(169 133 90 / 0.22), transparent 60%);
+}
+
+.material-kraft {
+  background-color: var(--color-kraft);
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23k)' opacity='0.4'/%3E%3C/svg%3E"),
+    linear-gradient(150deg, rgb(255 255 255 / 0.18), transparent 45%);
+}
+
+.material-cork {
+  background-color: #c99a6b;
+  background-image:
+    radial-gradient(circle at 20% 30%, rgb(120 78 45 / 0.5) 0 2px, transparent 3px),
+    radial-gradient(circle at 70% 60%, rgb(90 58 32 / 0.45) 0 2.5px, transparent 3.5px),
+    radial-gradient(circle at 45% 85%, rgb(140 96 58 / 0.4) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 88% 15%, rgb(100 64 36 / 0.4) 0 2px, transparent 3px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23c)' opacity='0.5'/%3E%3C/svg%3E");
+  background-size: 60px 60px, 70px 70px, 45px 45px, 80px 80px, 160px 160px;
+}
+
+/* Manga screentone / halftone. */
+.material-halftone {
+  background-image: radial-gradient(currentColor 1.1px, transparent 1.2px);
+  background-size: 7px 7px;
+}
+
+.material-halftone-lg {
+  background-image: radial-gradient(currentColor 2px, transparent 2.1px);
+  background-size: 13px 13px;
+}
+
+/* Lined notebook stock. */
+.material-lined {
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0 27px,
+    rgb(110 147 184 / 0.35) 27px 28px
+  );
+}
+
+.material-grid {
+  background-image:
+    linear-gradient(to right, rgb(110 147 184 / 0.22) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(110 147 184 / 0.22) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* 35mm sprocket edge for film strips. */
+.material-sprocket {
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      transparent 0 6px,
+      var(--color-cream) 6px 15px,
+      transparent 15px 21px
+    );
+}
+
+/* Vintage newsprint columns — used by the JoJo editorial divider. */
+.material-newsprint {
+  background-color: #e8dfcd;
+  background-image:
+    repeating-linear-gradient(
+      to bottom,
+      rgb(36 35 38 / 0.55) 0 1px,
+      transparent 1px 5px
+    ),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='w'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='4'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23w)' opacity='0.25'/%3E%3C/svg%3E");
+  background-size: 100% 6px, 200px 200px;
+}
+
+/* =========================================================================
+   Fabric / trim
+   ========================================================================= */
+
+.material-lace {
+  --lace-color: rgb(255 255 255 / 0.92);
+  background-color: transparent;
+  background-image:
+    radial-gradient(circle at 50% 100%, transparent 6px, var(--lace-color) 6.5px 9px, transparent 9.5px),
+    radial-gradient(circle at 50% 0%, transparent 6px, var(--lace-color) 6.5px 9px, transparent 9.5px),
+    radial-gradient(circle at 0% 50%, var(--lace-color) 0 4px, transparent 4.5px),
+    radial-gradient(circle at 100% 50%, var(--lace-color) 0 4px, transparent 4.5px);
+  background-size: 26px 26px;
+  background-position: 0 0, 13px 13px, 0 0, 0 0;
+}
+
+.material-gingham {
+  background-image:
+    linear-gradient(to right, rgb(184 94 117 / 0.28) 50%, transparent 50%),
+    linear-gradient(to bottom, rgb(184 94 117 / 0.28) 50%, transparent 50%);
+  background-size: 18px 18px;
+  background-color: var(--color-cream);
+}
+
+/* =========================================================================
+   Edge treatments — torn paper is a mask, not an image
+   ========================================================================= */
+
+.edge-torn-bottom {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0h400v372l-14-6-11 9-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9-16-7-11 6-13-9-15 8-12-6-14 9-16-8-11 6-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9-16-7-11 6-13-9-15 8-12-6-14 9-16-8-11 6-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9-16-7-11 6-13-9-15 8-12-6-14 9-16-8-11 6-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9V0z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 0h400v372l-14-6-11 9-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9-16-7-11 6-13-9-15 8-12-6-14 9-16-8-11 6-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9-16-7-11 6-13-9-15 8-12-6-14 9-16-8-11 6-13-8-15 7-12-9-14 8-16-6-11 9-13-7-15 6-12-8-14 9-16-7-11 6-13-9-15 8-12-6-14 9V0z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+.edge-torn-top {
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 400V28l14 6 11-9 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7V400z'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400' preserveAspectRatio='none'%3E%3Cpath fill='%23000' d='M0 400V28l14 6 11-9 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7 11-6 13 9 15-8 12 6 14-9 16 8 11-6 13 8 15-7 12 9 14-8 16 6 11-9 13 7 15-6 12 8 14-9 16 7V400z'/%3E%3C/svg%3E");
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+}
+
+/* =========================================================================
+   Typographic utilities
+   ========================================================================= */
+
+.type-serif {
+  font-family: var(--font-serif);
+  font-variation-settings: "SOFT" 30, "WONK" 1;
+}
+
+.type-hand {
+  font-family: var(--font-hand);
+}
+
+.type-display {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+/* Editorial masthead treatment used by the JoJo chapter. */
+.type-masthead {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 0.92;
+}
+
+.type-label {
+  font-family: var(--font-sans);
+  text-transform: uppercase;
+  letter-spacing: 0.22em;
+  font-size: 0.66rem;
+  font-weight: 600;
+}
+
+/* Manga sound-effect type: hard outline, no soft glow. */
+.type-sfx {
+  font-family: var(--font-display);
+  text-transform: uppercase;
+  color: var(--color-cream);
+  -webkit-text-stroke: 3px var(--color-ink);
+  paint-order: stroke fill;
+  letter-spacing: 0.04em;
+}
+
+/* =========================================================================
+   Object affordances
+   ========================================================================= */
+
+/* Every tappable scrapbook object signals itself without relying on colour. */
+.object-interactive {
+  position: relative;
+  cursor: pointer;
+}
+
+.object-interactive::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 8px;
+  border: 2px dashed rgb(184 94 117 / 0);
+  transition: border-color 0.25s var(--ease-paper);
+  pointer-events: none;
+}
+
+.object-interactive:hover::after,
+.object-interactive:focus-visible::after {
+  border-color: rgb(184 94 117 / 0.75);
+}
+
+/* Hint chevron that never communicates state through colour alone. */
+.hint-dot {
+  display: inline-grid;
+  place-items: center;
+  min-width: 1.4rem;
+  height: 1.4rem;
+  padding-inline: 0.35rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+/* Drop shadow that reads as a physical object sitting on paper. */
+.lift {
+  filter: drop-shadow(0 10px 16px rgb(36 35 38 / 0.28));
+}
+
+.lift-soft {
+  filter: drop-shadow(0 6px 10px rgb(36 35 38 / 0.2));
+}
+
+/* =========================================================================
+   Scene chrome
+   ========================================================================= */
+
+.scene-stage {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+/* Skip link — first stop on keyboard traversal. */
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 50%;
+  translate: -50% -160%;
+  z-index: 200;
+  padding: 0.6rem 1.1rem;
+  border-radius: 999px;
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: translate 0.2s var(--ease-paper);
+}
+
+.skip-link:focus-visible {
+  translate: -50% 0;
+}
+
+/* =========================================================================
+   Reduced motion — outcomes are preserved, movement is not
+   ========================================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .idle-sway,
+  .idle-float {
+    animation: none !important;
+  }
+}
+
+/* Subtle idle life for decorations. Disabled under reduced motion above. */
+@keyframes sway {
+  0%,
+  100% {
+    rotate: -1.4deg;
+  }
+  50% {
+    rotate: 1.4deg;
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -7px;
+  }
+}
+
+.idle-sway {
+  animation: sway 6s var(--ease-paper) infinite;
+}
+
+.idle-float {
+  animation: float-y 5.5s var(--ease-paper) infinite;
 }
