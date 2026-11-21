@@ -329,6 +329,53 @@ body {
   isolation: isolate;
 }
 
+/* =========================================================================
+   Cover-opening geometry (CoverScene)
+
+   The closed book is the right-hand page of a two-page spread, shifted a
+   quarter of the spread left so it sits centred on the desk. Opening tweens
+   the shift back to zero while the cover swings about its own left edge and
+   lands on the left-hand page. Below `sm` the cover is the full spread and
+   the shift is zero, so the cover simply sweeps off the page.
+   ========================================================================= */
+
+.stage-clip {
+  overflow: hidden;
+}
+
+.cover-stage {
+  transform: translateX(0);
+}
+
+@media (min-width: 640px) {
+  .cover-stage {
+    transform: translateX(-25%);
+  }
+}
+
+.book {
+  position: relative;
+  perspective: 1600px;
+}
+
+.book-cover {
+  transform-origin: left center;
+  transform-style: preserve-3d;
+}
+
+.book-face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.book-face-back {
+  transform: rotateY(180deg);
+}
+
+
 /* Skip link — first stop on keyboard traversal. */
 .skip-link {
   position: fixed;

@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 
 type TapeVariant = "blush" | "mint" | "butter" | "stripe" | "grid" | "plain";
 
-const TAPE: Record<TapeVariant, { background: string; border?: string }> = {
+const TAPE: Record<TapeVariant, { background: string; border?: string; backgroundSize?: string }> = {
   blush: { background: "rgb(242 201 210 / 0.82)" },
   mint: { background: "rgb(201 228 217 / 0.85)" },
   butter: { background: "rgb(245 228 170 / 0.85)" },

@@ -92,3 +92,12 @@ export const characters: CharacterAsset[] = [
     rotation: 3,
   },
 ];
+
+/**
+ * Art direction for the blue sub-spread (see `JoJoScene`).
+ *
+ * This is a *drawing* decision, not a canon claim: it only says which
+ * placeholder cut-outs are inked blue on that page. Confirm or change it —
+ * the scene reads this list and nothing else.
+ */
+export const blueSubspreadIds: string[] = ["wamuu", "polnareff"];

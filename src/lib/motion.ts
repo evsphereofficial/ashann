@@ -40,6 +40,25 @@ export const sceneSwap: Transition = {
   ease: [0.22, 0.68, 0.24, 1],
 };
 
+/**
+ * Scene enter/exit variants (Framer Motion owns scene-level transitions).
+ * The wrapper starts transparent so a scene's own assembly timeline can arm
+ * itself without a visible flash.
+ */
+export const sceneVariants: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: [0.22, 0.68, 0.24, 1] },
+  },
+  exit: {
+    opacity: 0,
+    y: -18,
+    transition: { duration: 0.3, ease: [0.4, 0, 1, 1] },
+  },
+};
+
 /** Overlay motion — quick in, slightly slower out. */
 export const overlayIn: Transition = { duration: 0.28, ease: [0.16, 1, 0.3, 1] };
 

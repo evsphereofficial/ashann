@@ -1,38 +1,103 @@
-"use client";
+'use client';
 
-import { createContext, useContext } from "react";
-import type { SceneId } from "@/content/types";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
+import { usePrefersReducedMotion } from '@/hooks/usePrefersReducedMotion';
+import { SCENE_ORDER, type SceneId } from '@/scenes/registry';
 
-export type OverlayState =
-  | { kind: "none" }
-  | { kind: "lightbox"; memoryId: string }
-  | { kind: "index" };
+export { SCENE_ORDER, type SceneId };
 
-export interface ScrapbookApi {
+export type OverlayRequest =
+  | { type: 'memory'; id: string }
+  | { type: 'keepsake'; id: string }
+  | { type: 'character'; id: string }
+  | { type: 'index' }
+  | null;
+
+type ScrapbookValue = {
   scene: SceneId;
   sceneIndex: number;
-  /** True once the cover has been opened — gates the navigation chrome. */
-  opened: boolean;
-  overlay: OverlayState;
-  /** True while a scene transition is in flight, to block double navigation. */
-  transitioning: boolean;
-  goTo: (scene: SceneId) => void;
-  next: () => void;
-  back: () => void;
-  openOverlay: (overlay: OverlayState) => void;
+  goToScene: (scene: SceneId) => void;
+  nextScene: () => void;
+  prevScene: () => void;
+  overlay: OverlayRequest;
+  openOverlay: (request: Exclude<OverlayRequest, null>) => void;
   closeOverlay: () => void;
-  /** Restarts the current scene's assembly timeline. */
-  replayScene: () => void;
-  /** Bumped whenever a scene should re-run its choreography. */
-  replayToken: number;
+  reducedMotion: boolean;
+};
+
+const ScrapbookContext = createContext<ScrapbookValue | null>(null);
+
+export function ScrapbookProvider({ children }: { children: ReactNode }) {
+  const reducedMotion = usePrefersReducedMotion();
+  const [scene, setScene] = useState<SceneId>('cover');
+  const [overlay, setOverlay] = useState<OverlayRequest>(null);
+
+  const goToScene = useCallback((next: SceneId) => {
+    setOverlay(null);
+    setScene(next);
+  }, []);
+
+  const sceneIndex = SCENE_ORDER.indexOf(scene);
+
+  const nextScene = useCallback(() => {
+    setOverlay(null);
+    setScene((current) => {
+      const index = SCENE_ORDER.indexOf(current);
+      return SCENE_ORDER[Math.min(index + 1, SCENE_ORDER.length - 1)];
+    });
+  }, []);
+
+  const prevScene = useCallback(() => {
+    setOverlay(null);
+    setScene((current) => {
+      const index = SCENE_ORDER.indexOf(current);
+      return SCENE_ORDER[Math.max(index - 1, 0)];
+    });
+  }, []);
+
+  const openOverlay = useCallback((request: Exclude<OverlayRequest, null>) => {
+    setOverlay(request);
+  }, []);
+
+  const closeOverlay = useCallback(() => setOverlay(null), []);
+
+  const value = useMemo<ScrapbookValue>(
+    () => ({
+      scene,
+      sceneIndex,
+      goToScene,
+      nextScene,
+      prevScene,
+      overlay,
+      openOverlay,
+      closeOverlay,
+      reducedMotion,
+    }),
+    [scene, sceneIndex, goToScene, nextScene, prevScene, overlay, openOverlay, closeOverlay, reducedMotion],
+  );
+
+  return <ScrapbookContext.Provider value={value}>{children}</ScrapbookContext.Provider>;
 }
 
-export const ScrapbookContext = createContext<ScrapbookApi | null>(null);
-
-export function useScrapbook(): ScrapbookApi {
+export function useScrapbook() {
   const value = useContext(ScrapbookContext);
-  if (!value) {
-    throw new Error("useScrapbook must be used inside <ScrapbookProvider>");
-  }
+  if (!value) throw new Error('useScrapbook must be used inside <ScrapbookProvider>');
   return value;
+}
+
+/** Scene changes reset the reading position without hijacking the scroll itself. */
+export function useSceneScrollReset(scene: SceneId) {
+  const { reducedMotion } = useScrapbook();
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' });
+  }, [scene, reducedMotion]);
 }
