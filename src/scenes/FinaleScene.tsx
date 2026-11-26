@@ -1,14 +1,17 @@
 'use client';
 
+import { useRef } from 'react';
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { assembleContainer, dropIn } from '@/lib/motion';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { anniversary } from '@/content/anniversary';
 import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
 import { PaperLayer } from '@/components/scrapbook/PaperLayer';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
-import { HeartSticker, FlowerSticker } from '@/components/scrapbook/Deco';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element } from '@/lib/art';
 
 /** Three.js never reaches the server — the star is client-only and lazy. */
 const KeepsakeStar = dynamic(
@@ -32,14 +35,50 @@ const KeepsakeStar = dynamic(
  */
 export default function FinaleScene() {
   const { goToScene, openOverlay, reducedMotion, sceneIndex } = useScrapbook();
+  const scopeRef = useRef<HTMLDivElement | null>(null);
+
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
 
   return (
-    <section aria-labelledby="finale-title" className="scene-stage px-4 py-14 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+      {/* ── Ground: the star wallpaper the finale is printed on ──────────── */}
+      <ArtImg
+        src={background(PAPER.starWallpaper)}
+        decorative
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.30] mix-blend-screen"
+      />
+      <ArtImg
+        src={element(ART.starGarland)}
+        decorative
+        data-parallax="0.24"
+        className="pointer-events-none absolute left-1/2 top-6 w-80 -translate-x-1/2 opacity-90"
+      />
+      <ArtImg
+        src={element(ART.moon)}
+        decorative
+        data-parallax="0.4"
+        className="pointer-events-none absolute right-8 top-16 w-28 opacity-90 lift-soft"
+      />
+      <ArtImg
+        src={element(ART.sparkles)}
+        decorative
+        data-parallax="0.3"
+        className="pointer-events-none absolute bottom-24 left-8 w-32 opacity-90"
+      />
+      <ArtImg
+        src={element(ART.angelWings)}
+        decorative
+        data-parallax="0.18"
+        className="pointer-events-none absolute bottom-10 right-12 hidden w-40 opacity-80 lg:block"
+      />
+
       <div className="relative mx-auto w-full max-w-5xl">
         <motion.div
           variants={assembleContainer}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.2 }}
           className="grid items-center gap-8 lg:grid-cols-[1fr_1.05fr]"
         >
           {/* ── the star ───────────────────────────────────────────────── */}
@@ -64,12 +103,16 @@ export default function FinaleScene() {
           <motion.div variants={dropIn({ y: 70, rotate: 6 }, 1)} className="order-1 lg:order-2">
             <PaperLayer material="cream" rotate={0.9} className="relative px-6 py-8 shadow-lifted sm:px-9 sm:py-10">
               <WashiTape variant="stripe" className="absolute -top-3 left-10" rotate={-5} />
-              <span aria-hidden="true" className="absolute -right-4 bottom-6">
-                <FlowerSticker size={48} />
-              </span>
-              <span aria-hidden="true" className="absolute right-6 top-6">
-                <HeartSticker size={32} />
-              </span>
+              <ArtImg
+                src={element(ART.redLily)}
+                decorative
+                className="pointer-events-none absolute -right-4 bottom-6 w-14"
+              />
+              <ArtImg
+                src={element(ART.doubleHeart)}
+                decorative
+                className="pointer-events-none absolute right-6 top-6 w-10"
+              />
 
               <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 08 · FINALE</p>
               <h2 id="finale-title" className="type-masthead mt-2 text-[clamp(1.9rem,5.5vw,3.4rem)] leading-[0.95]">
@@ -123,6 +166,6 @@ export default function FinaleScene() {
           </motion.div>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

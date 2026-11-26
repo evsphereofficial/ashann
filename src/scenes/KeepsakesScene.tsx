@@ -1,19 +1,24 @@
 'use client';
 
-import { useState, type ReactNode } from 'react';
+import { useRef, useState, type ReactNode } from 'react';
 import { motion } from 'framer-motion';
 import { assembleContainer, dropIn } from '@/lib/motion';
 import { useDragProgress } from '@/hooks/useDragProgress';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { keepsakes } from '@/content/keepsakes';
 import { memories } from '@/content/memories';
 import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { PaperLayer } from '@/components/scrapbook/PaperLayer';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
 import { Polaroid } from '@/components/scrapbook/Polaroid';
-import { BowSticker, StarSticker, TicketStub } from '@/components/scrapbook/Deco';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element } from '@/lib/art';
 
 const findKeepsake = (id: string) => keepsakes.find((item) => item.id === id) ?? keepsakes[0];
+
+/** One supplied decoration per card, cycling so no two neighbours match. */
+const CARD_ART = [ART.redButton, ART.bowDoodle, ART.ribbonDoodle, ART.moon, ART.crownDoodle, ART.redStar] as const;
 
 const DRAG_STYLE = { touchAction: 'none' as const, transition: 'transform 300ms var(--ease-paper)' };
 
@@ -31,8 +36,9 @@ function KeepsakeCard({
 
   return (
     <motion.article
-      variants={dropIn({ y: 70, rotate: index % 2 === 0 ? -7 : 7 }, index % 2 === 0 ? -1 : 1.2)}
+      variants={dropIn({ y: 70, rotate: index % 2 === 0 ? -7 : 7 }, index % 2 === 0 ? -2.2 : 2.4)}
       className="h-full"
+      style={{ marginTop: index % 2 === 0 ? 0 : 26 }}
     >
       <PaperLayer material={index % 2 === 0 ? 'cream' : 'lined'} className="flex h-full flex-col px-5 py-5 shadow-lifted">
         <header className="flex items-start justify-between gap-3">
@@ -42,9 +48,11 @@ function KeepsakeCard({
             </p>
             <h3 className="type-serif mt-1 text-xl leading-tight">{keepsake.title}</h3>
           </div>
-          <span aria-hidden="true" className="mt-1 shrink-0">
-            <TicketStub width={54} />
-          </span>
+          <ArtImg
+            src={element(CARD_ART[index % CARD_ART.length])}
+            decorative
+            className="mt-1 h-12 w-12 shrink-0 object-contain lift-soft"
+          />
         </header>
         <p className="mt-2 text-sm text-[var(--color-ink-soft)]">{keepsake.hint}</p>
 
@@ -271,7 +279,7 @@ function GiftBoxObject({ reveal }: { reveal: string }) {
           {open ? 'Lid open' : 'Gift box'}
         </motion.button>
         <span aria-hidden="true" className="absolute -right-2 -top-3">
-          <BowSticker size={46} />
+          <ArtImg src={element(ART.bowDoodle)} decorative className="w-12 drop-shadow-[0_4px_6px_rgb(0_0_0/0.25)]" />
         </span>
       </div>
       <p className="mt-2 text-[11px] text-[var(--color-ink-faint)]" aria-live="polite">
@@ -311,7 +319,11 @@ function StarObject({ reveal }: { reveal: string }) {
           transition={{ type: 'spring', stiffness: 260, damping: 18 }}
           className="relative z-10 rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-valentine)]"
         >
-          <StarSticker size={96} color="#c9a227" />
+          <ArtImg
+            src={element(ART.redStar)}
+            decorative
+            className="block w-24 drop-shadow-[0_8px_10px_rgb(0_0_0/0.3)]"
+          />
         </motion.button>
       </div>
       <p className="mt-2 text-[11px] text-[var(--color-ink-faint)]" aria-live="polite">
@@ -332,7 +344,11 @@ function StarObject({ reveal }: { reveal: string }) {
  * both have the identical button behind them.
  */
 export default function KeepsakesScene() {
-  const { goToScene } = useScrapbook();
+  const { goToScene, reducedMotion } = useScrapbook();
+  const scopeRef = useRef<HTMLDivElement | null>(null);
+
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
 
   const objects: Record<string, (reveal: string) => ReactNode> = {
     drawer: (reveal) => <DrawerObject reveal={reveal} />,
@@ -344,9 +360,40 @@ export default function KeepsakesScene() {
   };
 
   return (
-    <section aria-labelledby="keepsakes-title" className="scene-stage px-4 py-14 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+      {/* ── Ground: kraft board, ribbon, watch, roses ────────────────────── */}
+      <ArtImg
+        src={background(PAPER.notepadCollage)}
+        decorative
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.16] mix-blend-multiply"
+      />
+      <ArtImg
+        src={element(ART.ribbonDoodle)}
+        decorative
+        data-parallax="0.3"
+        className="pointer-events-none absolute -left-6 top-14 w-44 -rotate-[10deg] opacity-90"
+      />
+      <ArtImg
+        src={element(ART.pocketWatch)}
+        decorative
+        data-parallax="0.4"
+        className="pointer-events-none absolute right-6 top-10 w-28 rotate-[8deg] opacity-95 lift-soft"
+      />
+      <ArtImg
+        src={element(ART.driedRoses)}
+        decorative
+        data-parallax="0.24"
+        className="pointer-events-none absolute bottom-10 left-8 hidden w-36 opacity-90 lift-soft lg:block"
+      />
+      <ArtImg
+        src={element(ART.starGarland)}
+        decorative
+        data-parallax="0.18"
+        className="pointer-events-none absolute bottom-6 right-10 w-64 opacity-85"
+      />
+
       <div className="relative mx-auto w-full max-w-6xl">
-        <header className="relative mb-8 max-w-2xl">
+        <header data-reveal className="relative mb-8 max-w-2xl">
           <WashiTape variant="butter" className="absolute -top-6 left-12" rotate={6} />
           <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 05 · KEEPSAKES</p>
           <h2 id="keepsakes-title" className="type-masthead mt-2 text-[clamp(2rem,6vw,3.8rem)] leading-[0.95]">
@@ -361,7 +408,8 @@ export default function KeepsakesScene() {
         <motion.div
           variants={assembleContainer}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
         >
           {keepsakes.map((keepsake, index) => (
@@ -388,6 +436,6 @@ export default function KeepsakesScene() {
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

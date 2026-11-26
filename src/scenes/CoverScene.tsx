@@ -3,31 +3,32 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap, type GsapTimeline } from '@/lib/gsap';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { anniversary } from '@/content/anniversary';
 import { readable } from '@/content/types';
 import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
-import { HeartSticker, StarSticker } from '@/components/scrapbook/Deco';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element, frame } from '@/lib/art';
 
 /**
- * Scene 1 — the closed scrapbook on the desk.
+ * Chapter 00 — the cover of the scrapbook, lying open-able on the desk.
  *
- * GSAP owns the whole choreography: the book settling, the ribbon sliding in,
- * and the cover swinging open (stage shift + cover rotation on two different
- * elements, so no property is ever written by two systems).
+ * Composition: a full-bleed newsprint ground, a gingham swatch and a star
+ * garland laid over it at different depths (`data-parallax`), and the book
+ * itself carrying a real Speedwagon cut-out rising from behind a torn
+ * newspaper edge — the magazine-cover treatment from the references.
  *
- * The cover is a real button, there is always a visible skip control, and
- * reduced motion starts the book already open with the same end state.
+ * GSAP owns the choreography (settle → ribbon → cover swing). Framer Motion
+ * is not used here at all, so nothing writes a transform GSAP is animating.
+ * Reduced motion skips straight to the opened state with identical content.
  */
 export default function CoverScene() {
   const { goToScene, reducedMotion } = useScrapbook();
   const [userOpened, setUserOpened] = useState(false);
-  /**
-   * Reduced motion never plays the opening — the book is simply already open,
-   * with the identical finished composition.
-   */
   const open = userOpened || reducedMotion;
 
+  const scopeRef = useRef<HTMLDivElement | null>(null);
   const stageRef = useRef<HTMLDivElement | null>(null);
   const bookRef = useRef<HTMLDivElement | null>(null);
   const coverRef = useRef<HTMLDivElement | null>(null);
@@ -35,6 +36,9 @@ export default function CoverScene() {
   const inviteCtaRef = useRef<HTMLButtonElement | null>(null);
   const settleRef = useRef<GsapTimeline | null>(null);
   const openRef = useRef<GsapTimeline | null>(null);
+
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
 
   /* Decorative settle: book drops in, ribbon slides across, hint pops. */
   useEffect(() => {
@@ -104,16 +108,56 @@ export default function CoverScene() {
   };
 
   return (
-    <section aria-labelledby="cover-title" className="scene-stage flex flex-col items-center justify-center px-4 py-14">
+    <div ref={scopeRef} className="scene-stage relative flex flex-col items-center justify-center px-4 py-16">
       <h1 id="cover-title" className="sr-only">
         {anniversary.conceptTitle} — a six-month anniversary scrapbook
       </h1>
 
-      <p className="type-label mb-4 text-[11px] text-[var(--color-cream)]/85">
+      {/* ── Desk layers: newsprint ground, gingham, garland, scattered art ── */}
+      <ArtImg
+        src={background(PAPER.oldNewspaper)}
+        decorative
+        eager
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.22] mix-blend-multiply"
+      />
+      <ArtImg
+        src={background(PAPER.redGinghamSwatch)}
+        decorative
+        eager
+        data-parallax="0.35"
+        className="pointer-events-none absolute -left-14 top-8 w-56 -rotate-[14deg] opacity-80 lift-soft sm:w-72"
+      />
+      <ArtImg
+        src={element(ART.starGarland)}
+        decorative
+        eager
+        data-parallax="0.18"
+        className="pointer-events-none absolute right-2 top-4 w-56 opacity-90 sm:right-8 sm:w-80"
+      />
+      <ArtImg
+        src={element(ART.redLily)}
+        decorative
+        data-parallax="0.42"
+        className="pointer-events-none absolute bottom-10 left-4 w-24 -rotate-[10deg] opacity-90 lift-soft sm:left-14 sm:w-32"
+      />
+      <ArtImg
+        src={element(ART.doubleHeart)}
+        decorative
+        data-parallax="0.3"
+        className="pointer-events-none absolute bottom-28 right-6 w-20 rotate-[8deg] opacity-90 sm:right-16 sm:w-28"
+      />
+      <ArtImg
+        src={element(ART.cornerFlourish)}
+        decorative
+        data-parallax="0.22"
+        className="pointer-events-none absolute left-6 top-1/3 hidden w-32 opacity-70 lg:block"
+      />
+
+      <p className="type-label relative z-10 mb-5 text-[11px] text-[var(--color-burgundy)]">
         CHAPTER 00 · AN ANNIVERSARY SCRAPBOOK
       </p>
 
-      <div className="stage-clip w-full max-w-[52rem]">
+      <div className="stage-clip relative z-10 w-full max-w-[52rem]">
         <div ref={stageRef} className="cover-stage w-full">
           <div
             ref={bookRef}
@@ -130,7 +174,26 @@ export default function CoverScene() {
                 aria-hidden="true"
                 className="pointer-events-none absolute inset-0 material-lined opacity-60"
               />
+              <ArtImg
+                src={background(PAPER.ginghamNoteCard)}
+                decorative
+                className="pointer-events-none absolute -right-10 -top-8 w-44 rotate-[10deg] opacity-70"
+              />
               <WashiTape variant="grid" className="absolute -left-3 top-6 z-10" rotate={-8} />
+
+              {/* chibi stickers tucked into the invitation */}
+              <ArtImg
+                src={frame('okuyasu', 0)}
+                alt="Okuyasu chibi cut-out, taped into the invitation."
+                data-parallax="0.16"
+                className="pointer-events-none absolute bottom-3 right-3 z-10 w-20 lift-soft sm:w-24"
+              />
+              <ArtImg
+                src={frame('doppio', 1)}
+                alt="Doppio chibi cut-out, taped into the invitation."
+                data-parallax="0.24"
+                className="pointer-events-none absolute bottom-4 right-24 z-10 w-16 lift-soft sm:right-32 sm:w-20"
+              />
 
               <div className="relative flex h-full flex-col justify-center gap-4">
                 <p data-invite className="type-label text-[11px] text-[var(--color-valentine)]">
@@ -183,6 +246,12 @@ export default function CoverScene() {
               {/* front */}
               <div className="book-face rounded-[10px] border border-[#3c2a17] bg-[#6b4423] shadow-[var(--shadow-lifted)]">
                 <div aria-hidden="true" className="absolute inset-0 material-kraft opacity-45" />
+                <ArtImg
+                  src={background(PAPER.oldNewspaper)}
+                  decorative
+                  eager
+                  className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-30 mix-blend-multiply"
+                />
                 <div
                   aria-hidden="true"
                   className="absolute inset-3 rounded-[6px] border border-[#e9d7b6]/60"
@@ -196,7 +265,7 @@ export default function CoverScene() {
                   }}
                 />
 
-                <div className="relative flex h-full flex-col items-center justify-center gap-3 px-6 text-center">
+                <div className="relative flex h-full flex-col items-center gap-3 px-6 pt-8 text-center sm:pt-10">
                   <p className="type-label text-[10px] tracking-[0.3em] text-[#f3e2c4] sm:text-[11px]">
                     {anniversary.eyebrow.toUpperCase()}
                   </p>
@@ -214,6 +283,26 @@ export default function CoverScene() {
                   <p className="type-label text-[10px] text-[#e6d0aa]">
                     {readable(anniversary.dateLine)}
                   </p>
+
+                  {/* Speedwagon rising from behind the torn newsprint edge */}
+                  <ArtImg
+                    src={frame('speedwagon', 0)}
+                    alt="Speedwagon in a checkered top hat — supplied cut-out used as the cover portrait."
+                    eager
+                    className="pointer-events-none absolute -bottom-1 right-1 h-[58%] w-[46%] object-contain object-bottom drop-shadow-[0_14px_18px_rgb(0_0_0/0.5)] sm:right-3"
+                  />
+                  <ArtImg
+                    src={element(ART.tornNewsEdge)}
+                    decorative
+                    eager
+                    className="pointer-events-none absolute -bottom-1 left-0 h-[26%] w-full object-cover opacity-95"
+                  />
+                  <ArtImg
+                    src={element(ART.sfxBang)}
+                    decorative
+                    eager
+                    className="pointer-events-none absolute left-4 top-1/2 w-16 -rotate-[12deg] opacity-95 sm:w-20"
+                  />
                 </div>
 
                 {/* ribbon */}
@@ -228,12 +317,18 @@ export default function CoverScene() {
                   }}
                 />
                 <WashiTape variant="blush" className="absolute left-4 top-5 z-10" rotate={-14} width="88px" />
-                <span className="absolute bottom-5 left-5 z-10">
-                  <HeartSticker size={38} />
-                </span>
-                <span className="absolute right-5 top-16 z-10">
-                  <StarSticker size={34} color="#f2c9d2" />
-                </span>
+                <ArtImg
+                  src={element(ART.redStar)}
+                  decorative
+                  eager
+                  className="absolute right-6 top-16 z-10 w-10 lift-soft"
+                />
+                <ArtImg
+                  src={element(ART.starCluster)}
+                  decorative
+                  eager
+                  className="absolute bottom-24 left-5 z-10 w-16 opacity-90"
+                />
 
                 {/* the open affordance */}
                 <button
@@ -252,6 +347,16 @@ export default function CoverScene() {
               {/* back — becomes the left-hand page once opened */}
               <div className="book-face book-face-back hidden rounded-[10px] border border-[#d8c9a9] bg-[var(--color-cream)] shadow-[var(--shadow-lifted)] sm:block">
                 <div aria-hidden="true" className="absolute inset-0 material-newsprint opacity-40" />
+                <ArtImg
+                  src={element(ART.tornLinedCorner)}
+                  decorative
+                  className="pointer-events-none absolute -bottom-4 -left-4 w-32 opacity-80"
+                />
+                <ArtImg
+                  src={element(ART.driedRoses)}
+                  decorative
+                  className="pointer-events-none absolute right-4 top-4 w-24 rotate-[8deg] opacity-90 lift-soft"
+                />
                 <div className="relative flex h-full flex-col justify-center gap-3 px-8">
                   <p className="type-label text-[11px] text-[var(--color-valentine)]">INSIDE THE COVER</p>
                   <p className="type-hand text-[clamp(1.3rem,2.6vw,2rem)] leading-tight text-[var(--color-ink)]">
@@ -268,12 +373,12 @@ export default function CoverScene() {
         </div>
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+      <div className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-3">
         {!open && (
           <button
             type="button"
             onClick={handleOpen}
-            className="rounded-full border border-[#e9d7b6] bg-[#3c2a17]/70 px-5 py-2.5 text-sm font-semibold text-[var(--color-cream)] transition hover:bg-[#3c2a17] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cream)]"
+            className="rounded-full border border-[#8a6a3f] bg-[#3c2a17]/85 px-5 py-2.5 text-sm font-semibold text-[var(--color-cream)] transition hover:bg-[#3c2a17] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-cream)]"
           >
             Open the cover
           </button>
@@ -286,6 +391,6 @@ export default function CoverScene() {
           Skip to the opening spread
         </button>
       </div>
-    </section>
+    </div>
   );
 }

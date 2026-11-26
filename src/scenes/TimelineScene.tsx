@@ -1,13 +1,16 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { timeline } from '@/content/timeline';
 import { readable } from '@/content/types';
 import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { PaperLayer } from '@/components/scrapbook/PaperLayer';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element } from '@/lib/art';
 
 const RING_RADIUS = 40;
 const RING_CIRCUMFERENCE = 2 * Math.PI * RING_RADIUS;
@@ -42,8 +45,12 @@ function ProgressRing({ progress, reducedMotion }: { progress: number; reducedMo
  */
 export default function TimelineScene() {
   const { goToScene, reducedMotion } = useScrapbook();
+  const scopeRef = useRef<HTMLDivElement | null>(null);
   const [selected, setSelected] = useState<number | null>(null);
   const [showAll, setShowAll] = useState(false);
+
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
 
   const expanded = showAll ? timeline.map((_, index) => index) : selected === null ? [] : [selected];
 
@@ -53,9 +60,40 @@ export default function TimelineScene() {
   };
 
   return (
-    <section aria-labelledby="timeline-title" className="scene-stage px-4 py-14 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+      {/* ── Ground: newsprint strip, gingham, ribbon + star scatter ──────── */}
+      <ArtImg
+        src={background(PAPER.oldNewspaper)}
+        decorative
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.14] mix-blend-multiply"
+      />
+      <ArtImg
+        src={element(ART.redGingham)}
+        decorative
+        data-parallax="0.28"
+        className="pointer-events-none absolute -left-12 top-8 w-56 -rotate-[10deg] opacity-80"
+      />
+      <ArtImg
+        src={element(ART.ribbonDoodle)}
+        decorative
+        data-parallax="0.36"
+        className="pointer-events-none absolute right-4 top-16 w-40 rotate-[14deg] opacity-90"
+      />
+      <ArtImg
+        src={element(ART.starCluster)}
+        decorative
+        data-parallax="0.2"
+        className="pointer-events-none absolute bottom-24 left-6 w-32 opacity-90"
+      />
+      <ArtImg
+        src={element(ART.pocketWatch)}
+        decorative
+        data-parallax="0.42"
+        className="pointer-events-none absolute bottom-8 right-10 hidden w-32 opacity-95 lift-soft lg:block"
+      />
+
       <div className="relative mx-auto w-full max-w-6xl">
-        <header className="relative mb-10 max-w-2xl">
+        <header data-reveal className="relative mb-10 max-w-2xl">
           <WashiTape variant="mint" className="absolute -top-6 left-6" rotate={-5} />
           <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 02 · SIX MONTHS</p>
           <h2 id="timeline-title" className="type-masthead mt-2 text-[clamp(2rem,6vw,3.8rem)] leading-[0.95]">
@@ -66,8 +104,13 @@ export default function TimelineScene() {
           </p>
         </header>
 
-        <div className="relative">
+        <PaperLayer material="grid" rotate={0.5} className="relative px-4 py-7 shadow-lifted sm:px-7">
           {/* the ribbon the tokens are threaded on */}
+          <ArtImg
+            src={element(ART.tornLinedNote)}
+            decorative
+            className="pointer-events-none absolute -right-5 -top-7 hidden w-36 rotate-[7deg] opacity-90 sm:block"
+          />
           <div
             aria-hidden="true"
             className="absolute left-6 right-6 top-[54px] hidden border-t-[3px] border-dashed border-[#c9b79c] lg:block"
@@ -125,7 +168,7 @@ export default function TimelineScene() {
               );
             })}
           </ol>
-        </div>
+        </PaperLayer>
 
         {/* ── detail panels ──────────────────────────────────────────────── */}
         <div className="mt-10">
@@ -231,6 +274,6 @@ export default function TimelineScene() {
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }

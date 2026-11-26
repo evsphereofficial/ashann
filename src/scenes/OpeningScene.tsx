@@ -5,6 +5,7 @@ import { motion, useMotionValue } from 'framer-motion';
 import { gsap, type GsapTimeline } from '@/lib/gsap';
 import { stickerPop } from '@/lib/motion';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { anniversary } from '@/content/anniversary';
 import { memories } from '@/content/memories';
 import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
@@ -12,14 +13,20 @@ import { PaperLayer } from '@/components/scrapbook/PaperLayer';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
 import { HandwrittenNote } from '@/components/scrapbook/HandwrittenNote';
 import { Polaroid } from '@/components/scrapbook/Polaroid';
-import { SpeedLines, StarSticker, HeartSticker } from '@/components/scrapbook/Deco';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element, frame } from '@/lib/art';
 
 /**
- * Scene 2 — "what is this scrapbook", assembled in front of you.
+ * Chapter 01 — "what is this scrapbook", assembled in front of you.
  *
- * GSAP owns the assembly timeline (paper → photo → sticker box → footer).
- * Framer Motion owns each sticker once it is on the page: pop in, drag, and
- * the tap/keyboard feedback. The two never write to the same element.
+ * Composition: a torn newsprint ground, a blue collage sheet slid in behind
+ * the main page, a Wamuu cut-out breaking out from behind the paper, and the
+ * sticker box dropped at an angle. Nothing lines up on a grid — the page is
+ * built from overlap.
+ *
+ * GSAP owns the assembly timeline (paper → photo → sticker box → footer) and
+ * the parallax drift. Framer Motion owns each sticker once it is on the page:
+ * pop in, drag, tap/keyboard feedback. The two never write to the same element.
  *
  * Drag is always optional: every sticker can be placed with a button and
  * moved with the arrow keys, so nothing on this page needs a pointer.
@@ -131,10 +138,14 @@ function PlacedSticker({
 
 export default function OpeningScene() {
   const { goToScene, openOverlay, reducedMotion } = useScrapbook();
+  const scopeRef = useRef<HTMLDivElement | null>(null);
   const boardRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<GsapTimeline | null>(null);
   const [placed, setPlaced] = useState<number[]>([]);
   const [status, setStatus] = useState('');
+
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
 
   /* Assembly: the spread builds itself in one continuous GSAP pass. */
   useEffect(() => {
@@ -172,26 +183,75 @@ export default function OpeningScene() {
   };
 
   return (
-    <section aria-labelledby="opening-title" className="scene-stage px-4 py-14 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+      {/* ── Ground: blue collage paper, torn edge, scattered supplied art ── */}
+      <ArtImg
+        src={background(PAPER.blueShatteredStars)}
+        decorative
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.16] mix-blend-multiply"
+      />
+      <ArtImg
+        src={background(PAPER.printmakingGrid)}
+        decorative
+        data-parallax="0.2"
+        className="pointer-events-none absolute -right-16 top-10 w-72 rotate-[9deg] opacity-60"
+      />
+      <ArtImg
+        src={element(ART.tornLinedCorner)}
+        decorative
+        data-parallax="0.34"
+        className="pointer-events-none absolute -left-8 bottom-16 w-44 -rotate-[6deg] opacity-90"
+      />
+      <ArtImg
+        src={element(ART.books)}
+        decorative
+        data-parallax="0.4"
+        className="pointer-events-none absolute bottom-6 right-6 hidden w-40 opacity-95 lift-soft lg:block"
+      />
+      <ArtImg
+        src={element(ART.cornerFlourish)}
+        decorative
+        data-parallax="0.16"
+        className="pointer-events-none absolute right-10 top-4 w-36 opacity-70"
+      />
+
       <div className="relative mx-auto w-full max-w-6xl">
-        <SpeedLines
-          className="pointer-events-none absolute -top-16 left-1/2 h-[380px] w-[380px] -translate-x-1/2 opacity-[0.05]"
-          count={26}
+        <ArtImg
+          src={element(ART.tornNewsCaption)}
+          decorative
+          data-parallax="0.2"
+          className="pointer-events-none absolute -top-10 right-4 w-52 rotate-[5deg] opacity-90"
         />
 
         <div ref={boardRef} className="relative">
+          {/* Wamuu, cut out and slid in behind the page */}
+          <ArtImg
+            src={frame('wamuu', 4)}
+            alt="Wamuu in blue armour — supplied cut-out tucked behind the opening page."
+            data-parallax="0.26"
+            className="pointer-events-none absolute -top-10 right-0 z-0 hidden h-[118%] w-[42%] object-contain object-right-top opacity-95 drop-shadow-[0_18px_22px_rgb(18_48_56/0.35)] lg:block"
+          />
+
           <div className="grid items-start gap-6 lg:grid-cols-[1.3fr_1fr]">
             {/* ── main sheet ─────────────────────────────────────────────── */}
-            <div data-assemble className="relative">
+            <div data-assemble className="relative z-10">
               <PaperLayer
                 material="cream"
                 rotate={-1.1}
                 className="relative px-6 py-8 shadow-lifted sm:px-10 sm:py-12"
               >
                 <WashiTape variant="stripe" className="absolute -top-3 left-10" rotate={-4} width="120px" />
-                <span aria-hidden="true" className="absolute -right-4 -top-5">
-                  <StarSticker size={44} color="#c9a227" />
-                </span>
+                <ArtImg
+                  src={element(ART.redStar)}
+                  decorative
+                  className="pointer-events-none absolute -right-4 -top-5 w-11"
+                />
+                <ArtImg
+                  src={element(ART.ginghamNote)}
+                  decorative
+                  data-parallax="0.14"
+                  className="pointer-events-none absolute -bottom-8 -left-6 hidden w-32 rotate-[-9deg] opacity-95 lift-soft sm:block"
+                />
 
                 <p className="type-label text-[11px] text-[var(--color-valentine)]">
                   CHAPTER 01 · WHAT THIS IS
@@ -236,8 +296,14 @@ export default function OpeningScene() {
             </div>
 
             {/* ── photo + sticker box ────────────────────────────────────── */}
-            <div className="space-y-6">
-              <div data-assemble>
+            <div className="relative z-10 space-y-6 lg:pt-10">
+              <div data-assemble className="relative">
+                <ArtImg
+                  src={element(ART.pocketWatch)}
+                  decorative
+                  data-parallax="0.3"
+                  className="pointer-events-none absolute -right-6 -top-10 z-20 hidden w-24 rotate-[12deg] lift-soft sm:block"
+                />
                 <Polaroid
                   src={memories[0].image}
                   alt={memories[0].alt}
@@ -245,12 +311,12 @@ export default function OpeningScene() {
                   rotate={2.6}
                   onClick={() => openOverlay({ type: 'memory', id: memories[0].id })}
                 />
-                <p className="type-label mt-3 text-center text-[10px] text-[var(--color-cream)]/85">
+                <p className="type-label mt-3 text-center text-[10px] text-[var(--color-ink-faint)]">
                   TAP THE PHOTOGRAPH TO READ THE BACK
                 </p>
               </div>
 
-              <div data-assemble>
+              <div data-assemble className="relative">
                 <PaperLayer material="kraft" rotate={1.4} className="relative px-5 py-5 shadow-lifted">
                   <p className="type-label text-[11px] text-[#3c2a17]">THE STICKER BOX</p>
                   <p className="mt-1 text-sm text-[#4a3a24]">
@@ -273,7 +339,11 @@ export default function OpeningScene() {
                     })}
                   </div>
                   <span aria-hidden="true" className="absolute -bottom-5 -right-4">
-                    <HeartSticker size={40} />
+                    <ArtImg
+                      src={element(ART.doubleHeart)}
+                      decorative
+                      className="w-11 drop-shadow-[0_4px_6px_rgb(0_0_0/0.25)]"
+                    />
                   </span>
                 </PaperLayer>
               </div>
@@ -316,6 +386,14 @@ export default function OpeningScene() {
           </button>
         </div>
       </div>
-    </section>
+
+      {/* Star scatter, kept for the sticker-box accent */}
+      <ArtImg
+        src={element(ART.redStar)}
+        decorative
+        data-parallax="0.3"
+        className="pointer-events-none absolute left-6 top-24 hidden w-11 -rotate-[10deg] sm:block"
+      />
+    </div>
   );
 }

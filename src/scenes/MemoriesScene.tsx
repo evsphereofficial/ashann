@@ -1,15 +1,17 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { assembleContainer, dropIn } from '@/lib/motion';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { memories } from '@/content/memories';
 import type { Memory } from '@/content/types';
-import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
+import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
 import { Polaroid } from '@/components/scrapbook/Polaroid';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
-import { HalftoneStar } from '@/components/scrapbook/Deco';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element } from '@/lib/art';
 
 const ASPECT: Record<Memory['layout'], string> = {
   polaroid: '4 / 5',
@@ -26,6 +28,12 @@ const SPAN: Record<Memory['layout'], string> = {
 };
 
 /**
+ * Vertical stagger that breaks the grid: every print sits at a different
+ * height so the row reads as a pile of photographs rather than a table.
+ */
+const COLLAGE_OFFSET = [0, 34, -10, 26, 48, 6] as const;
+
+/**
  * Scene 4 — the photographs.
  *
  * Each print is a real button (click, tap, Enter all work) that opens a
@@ -35,12 +43,47 @@ const SPAN: Record<Memory['layout'], string> = {
  */
 export default function MemoriesScene() {
   const { goToScene, openOverlay, reducedMotion } = useScrapbook();
+  const scopeRef = useRef<HTMLDivElement | null>(null);
   const [showList, setShowList] = useState(false);
 
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
+
   return (
-    <section aria-labelledby="memories-title" className="scene-stage px-4 py-14 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+      {/* ── Ground: notebook stock, torn corners, stamps and scatter ─────── */}
+      <ArtImg
+        src={background(PAPER.starredNotebook)}
+        decorative
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.18] mix-blend-multiply"
+      />
+      <ArtImg
+        src={element(ART.tornLinedCorner)}
+        decorative
+        data-parallax="0.3"
+        className="pointer-events-none absolute -left-10 top-12 w-48 -rotate-[8deg] opacity-90"
+      />
+      <ArtImg
+        src={element(ART.redLily)}
+        decorative
+        data-parallax="0.38"
+        className="pointer-events-none absolute right-6 top-10 w-24 rotate-[12deg] opacity-90 lift-soft"
+      />
+      <ArtImg
+        src={element(ART.sparkles)}
+        decorative
+        data-parallax="0.18"
+        className="pointer-events-none absolute bottom-20 left-8 w-28 opacity-90"
+      />
+      <ArtImg
+        src={element(ART.driedRoses)}
+        decorative
+        data-parallax="0.44"
+        className="pointer-events-none absolute bottom-6 right-12 hidden w-36 opacity-95 lift-soft lg:block"
+      />
+
       <div className="relative mx-auto w-full max-w-6xl">
-        <header className="relative mb-10 max-w-2xl">
+        <header data-reveal className="relative mb-6 max-w-2xl">
           <WashiTape variant="blush" className="absolute -top-6 left-8" rotate={4} />
           <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 03 · PHOTOGRAPHS</p>
           <h2 id="memories-title" className="type-masthead mt-2 text-[clamp(2rem,6vw,3.8rem)] leading-[0.95]">
@@ -50,19 +93,24 @@ export default function MemoriesScene() {
             Open any print to read the caption and the note on the back. Use the arrows inside the
             viewer to move between them, and Escape to come back here.
           </p>
+          <p className="mt-3">
+            <PlaceholderTag value="[PLACEHOLDER: add your own photographs over these supplied paper scans]" />
+          </p>
         </header>
 
         <motion.div
           variants={assembleContainer}
           initial="hidden"
-          animate="visible"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.15 }}
           className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6"
         >
-          {memories.map((memory) => (
+          {memories.map((memory, index) => (
             <motion.div
               key={memory.id}
               variants={dropIn({ y: 74, rotate: memory.rotation - 20 }, memory.rotation)}
               className={[SPAN[memory.layout], 'relative'].join(' ')}
+              style={{ marginTop: COLLAGE_OFFSET[index % COLLAGE_OFFSET.length] }}
             >
               <WashiTape
                 variant={memory.layout === 'filmstrip' ? 'stripe' : 'grid'}
@@ -79,7 +127,7 @@ export default function MemoriesScene() {
                 imageClassName={memory.layout === 'filmstrip' ? 'object-center' : undefined}
                 onClick={() => openOverlay({ type: 'memory', id: memory.id })}
               />
-              <p className="type-label mt-2 text-center text-[10px] text-[var(--color-cream)]/85">
+              <p className="type-label mt-2 text-center text-[10px] text-[var(--color-ink-faint)]">
                 {memory.layout.toUpperCase()}
               </p>
             </motion.div>
@@ -123,7 +171,11 @@ export default function MemoriesScene() {
             >
               <div className="relative mt-8 rounded-[10px] border border-dashed border-[#c9b79c] bg-[var(--color-cream)]/90 p-5">
                 <span aria-hidden="true" className="absolute -right-3 -top-4">
-                  <HalftoneStar size={44} />
+                  <ArtImg
+                    src={element(ART.redStar)}
+                    decorative
+                    className="w-11 drop-shadow-[0_4px_6px_rgb(0_0_0/0.25)]"
+                  />
                 </span>
                 <h3 className="type-label text-[11px] text-[var(--color-valentine)]">
                   ALL SIX CAPTIONS · TEXT ALTERNATIVE
@@ -156,6 +208,6 @@ export default function MemoriesScene() {
           )}
         </AnimatePresence>
       </div>
-    </section>
+    </div>
   );
 }

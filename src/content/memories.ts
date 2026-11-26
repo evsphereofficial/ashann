@@ -1,15 +1,18 @@
+import { PAPER, background } from "@/lib/art";
 import { ph, type Memory } from "./types";
 
 /**
  * Photographs and captions.
  *
- * No personal photographs were supplied, so each entry points at a locally
- * generated placeholder asset in `public/assets/photos/`. To go live, drop a
- * real image into that folder and update `image` + `alt` — layout, animation
- * and lightbox code never need to change.
+ * No personal photographs were supplied, so each print shows a real supplied
+ * paper scan from `RefrenceImages/` (the same pack the rest of the scrapbook
+ * is built from) instead of a generated illustration. That keeps every pixel
+ * on the page part of the user's own material while leaving the *slot* honest:
+ * every caption, note and title is still an explicit `[PLACEHOLDER …]`, and
+ * the photographs chapter carries a visible "to fill in" banner.
  *
- * The four `layout` variants deliberately produce four different compositions
- * so the spread never reads as a repeated card grid.
+ * To go live, point `image` at your own file — layout, animation and the
+ * lightbox never need to change.
  */
 export const memories: Memory[] = [
   {
@@ -18,8 +21,8 @@ export const memories: Memory[] = [
     date: ph("date of the first memory"),
     caption: ph("short caption for the polaroid"),
     note: ph("the note written on the back of this polaroid"),
-    image: "/assets/photos/memory-1.svg",
-    alt: "Placeholder photograph: abstract paper collage standing in for the first memory.",
+    image: background(PAPER.grungeRed),
+    alt: "Placeholder print: a supplied red grunge collage scan standing in for the first photograph.",
     layout: "polaroid",
     rotation: -4.5,
   },
@@ -29,8 +32,8 @@ export const memories: Memory[] = [
     date: ph("date of the film-strip memory"),
     caption: ph("caption for the film strip frames"),
     note: ph("what these frames were taken of"),
-    image: "/assets/photos/memory-2.svg",
-    alt: "Placeholder photograph: abstract film-strip frame standing in for the second memory.",
+    image: background(PAPER.redMangaPanels),
+    alt: "Placeholder print: a supplied red manga-panel scan standing in for the film-strip photograph.",
     layout: "filmstrip",
     rotation: 3,
   },
@@ -40,8 +43,8 @@ export const memories: Memory[] = [
     date: ph("date of the postcard memory"),
     caption: ph("message written across the postcard"),
     note: ph("where this postcard was sent from"),
-    image: "/assets/photos/memory-3.svg",
-    alt: "Placeholder photograph: abstract postcard standing in for the third memory.",
+    image: background(PAPER.printmakingGrid),
+    alt: "Placeholder print: a supplied printmaking-grid scan standing in for the postcard photograph.",
     layout: "postcard",
     rotation: -2,
   },
@@ -51,8 +54,8 @@ export const memories: Memory[] = [
     date: ph("date of the editorial memory"),
     caption: ph("editorial caption for the large photograph"),
     note: ph("longer note beside the large photograph"),
-    image: "/assets/photos/memory-4.svg",
-    alt: "Placeholder photograph: abstract editorial image standing in for the fourth memory.",
+    image: background(PAPER.blueShatteredStars),
+    alt: "Placeholder print: a supplied blue shattered-star collage standing in for the large photograph.",
     layout: "editorial",
     rotation: 1.8,
   },
@@ -62,8 +65,8 @@ export const memories: Memory[] = [
     date: ph("date of the ticket stub"),
     caption: ph("what the ticket was for"),
     note: ph("one line about the ticket stub"),
-    image: "/assets/photos/memory-5.svg",
-    alt: "Placeholder photograph: abstract ticket-stub image standing in for the fifth memory.",
+    image: background(PAPER.starredNotebook),
+    alt: "Placeholder print: a supplied starred notebook scan standing in for the ticket-stub photograph.",
     layout: "postcard",
     rotation: 5,
   },
@@ -73,8 +76,8 @@ export const memories: Memory[] = [
     date: ph("date of the small photograph"),
     caption: ph("caption for the small photograph"),
     note: ph("note for the small photograph"),
-    image: "/assets/photos/memory-6.svg",
-    alt: "Placeholder photograph: abstract small snapshot standing in for the sixth memory.",
+    image: background(PAPER.ginghamNoteCard),
+    alt: "Placeholder print: a supplied gingham note-card scan standing in for the small photograph.",
     layout: "polaroid",
     rotation: -6,
   },

@@ -3,11 +3,13 @@
 import { useEffect, useRef, useState } from 'react';
 import { gsap, type GsapTimeline } from '@/lib/gsap';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
+import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { letter } from '@/content/keepsakes';
 import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { PaperLayer } from '@/components/scrapbook/PaperLayer';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
-import { HeartSticker } from '@/components/scrapbook/Deco';
+import { ArtImg } from '@/components/scrapbook/ArtImg';
+import { ART, PAPER, background, element } from '@/lib/art';
 
 const FOLDED = { rotateX: 74, scale: 0.94, opacity: 0.78, y: 10 };
 
@@ -23,12 +25,16 @@ export default function LetterScene() {
   const { goToScene, reducedMotion } = useScrapbook();
   const [open, setOpen] = useState(false);
 
+  const scopeRef = useRef<HTMLDivElement | null>(null);
   const sheetRef = useRef<HTMLDivElement | null>(null);
   const sealRef = useRef<HTMLButtonElement | null>(null);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const timelineRef = useRef<GsapTimeline | null>(null);
 
   const lineRefs = useRef<HTMLElement[]>([]);
+
+  useParallax(scopeRef, !reducedMotion);
+  useChapterReveal(scopeRef);
 
   useEffect(() => {
     return () => {
@@ -75,9 +81,46 @@ export default function LetterScene() {
   };
 
   return (
-    <section aria-labelledby="letter-title" className="scene-stage px-4 py-14 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+      {/* ── Ground: stationery, stamps, dried flowers ────────────────────── */}
+      <ArtImg
+        src={background(PAPER.scriptOnBlack)}
+        decorative
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.10] mix-blend-multiply"
+      />
+      <ArtImg
+        src={element(ART.pinkLetterPaper)}
+        decorative
+        data-parallax="0.3"
+        className="pointer-events-none absolute -left-10 top-16 w-56 -rotate-[8deg] opacity-90"
+      />
+      <ArtImg
+        src={element(ART.driedRoses)}
+        decorative
+        data-parallax="0.4"
+        className="pointer-events-none absolute right-6 top-12 w-32 rotate-[9deg] opacity-95 lift-soft"
+      />
+      <ArtImg
+        src={element(ART.redGingham)}
+        decorative
+        data-parallax="0.22"
+        className="pointer-events-none absolute bottom-16 right-10 w-44 rotate-[6deg] opacity-80"
+      />
+      <ArtImg
+        src={element(ART.doubleHeart)}
+        decorative
+        data-parallax="0.34"
+        className="pointer-events-none absolute bottom-10 left-10 w-24 -rotate-[6deg] opacity-90"
+      />
+      <ArtImg
+        src={element(ART.starGarland)}
+        decorative
+        data-parallax="0.16"
+        className="pointer-events-none absolute left-1/2 top-6 hidden w-72 -translate-x-1/2 opacity-80 lg:block"
+      />
+
       <div className="relative mx-auto w-full max-w-3xl">
-        <header className="relative mb-8 text-center">
+        <header data-reveal className="relative mb-8 text-center">
           <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 06 · THE LETTER</p>
           <h2 id="letter-title" className="type-masthead mt-2 text-[clamp(2rem,6vw,3.6rem)] leading-[0.95]">
             Something sealed
@@ -101,7 +144,11 @@ export default function LetterScene() {
             <PaperLayer material="cream" rotate={-0.7} className="relative px-6 py-8 shadow-lifted sm:px-12 sm:py-12">
               <WashiTape variant="blush" className="absolute -top-3 left-1/2 -translate-x-1/2" rotate={-3} width="130px" />
               <span aria-hidden="true" className="absolute right-5 top-5">
-                <HeartSticker size={34} />
+                <ArtImg
+                  src={element(ART.doubleHeart)}
+                  decorative
+                  className="w-9 drop-shadow-[0_4px_6px_rgb(0_0_0/0.25)]"
+                />
               </span>
 
               <div
@@ -203,6 +250,6 @@ export default function LetterScene() {
           </button>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
