@@ -1,6 +1,6 @@
 'use client';
 
-import { Suspense, lazy, useEffect, useRef, useState, type ReactNode } from 'react';
+import { Suspense, lazy, useEffect } from 'react';
 import { ChapterSection } from './ChapterSection';
 import { ScrollTrigger } from '@/lib/gsap';
 import { SCENE_ORDER, SCENE_META, type SceneId } from '@/scenes/registry';
@@ -74,62 +74,11 @@ function ChapterFallback() {
 }
 
 /**
- * Mount `children` once the placeholder comes within `rootMargin` of the
- * viewport. The placeholder reserves real height (via `minHeight`), so
- * mounting late never shifts what the reader is already looking at.
- */
-function NearViewport({ children, minHeight }: { children: ReactNode; minHeight: number }) {
-  const holderRef = useRef<HTMLDivElement | null>(null);
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    if (mounted) return;
-    const node = holderRef.current;
-    if (!node) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (!entries.some((entry) => entry.isIntersecting)) return;
-        observer.disconnect();
-        setMounted(true);
-      },
-      // One and a half screens of lead time: the chunk is fetched long
-      // before the reader arrives, and nothing jumps when it lands.
-      { rootMargin: '150% 0px 150% 0px' },
-    );
-
-    observer.observe(node);
-    return () => observer.disconnect();
-  }, [mounted]);
-
-  /* The chapter just changed the document's height — re-measure the triggers. */
-  useEffect(() => {
-    if (!mounted) return;
-    const frame = window.requestAnimationFrame(() => ScrollTrigger.refresh());
-    return () => window.cancelAnimationFrame(frame);
-  }, [mounted]);
-
-  if (mounted) return <>{children}</>;
-
-  return (
-    <div
-      ref={holderRef}
-      aria-hidden="true"
-      style={{ minHeight }}
-      className="grid place-items-center"
-    >
-      <span className="type-hand text-lg text-[var(--pal-ink,#4a4750)] opacity-40">…</span>
-    </div>
-  );
-}
-
-/**
  * The scrapbook as one continuous document.
  *
- * Eight chapters stacked in reading order inside a single `<main>`; the
- * reader scrolls through them and the shell's scroll spy reports which one
- * owns the viewport. There is no scene swap, no exit animation and no
- * scroll reset — scrolling is the only transition.
+ * Eight chapters stacked in reading order inside a single `<main>`. All chunks
+ * and assets are pre-warmed by `ScrapbookLoader`, so every chapter mounts
+ * cleanly without mid-scroll layout shifts.
  */
 export function SceneHost() {
   useRefreshScrollTriggers();
@@ -147,9 +96,7 @@ export function SceneHost() {
             torn={index > 0}
           >
             <Suspense fallback={<ChapterFallback />}>
-              <NearViewport minHeight={index === 0 ? 0 : 720}>
-                <Scene />
-              </NearViewport>
+              <Scene />
             </Suspense>
           </ChapterSection>
         );

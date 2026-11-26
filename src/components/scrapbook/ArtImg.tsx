@@ -20,7 +20,7 @@ export const ArtImg = forwardRef<HTMLImageElement, ArtImgProps>(function ArtImg(
     alt = '',
     className,
     style,
-    eager = false,
+    eager = true,
     draggable = false,
     decorative = false,
     ...rest

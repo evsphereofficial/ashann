@@ -1,9 +1,11 @@
 'use client';
 
+import { useCallback, useState } from 'react';
 import { MotionConfig } from 'framer-motion';
 import { ScrapbookProvider, useScrapbook } from './ScrapbookContext';
 import { SceneHost } from './SceneHost';
 import { SceneNavigation } from './SceneNavigation';
+import { ScrapbookLoader } from './ScrapbookLoader';
 import { OverlayHost } from '@/components/overlay/OverlayHost';
 import { chapterPalettes } from '@/content/palettes';
 
@@ -38,7 +40,7 @@ function Backdrop() {
       />
 
       {/* Paper grain over everything, so margins read as stock not flat colour. */}
-      <div className="material-paper absolute inset-0 opacity-35 mix-blend-multiply sm:opacity-45" />
+      <div className="material-paper absolute inset-0 opacity-25 sm:opacity-35" />
 
       {/* Warm desk light, drifting just enough to feel alive. */}
       {!reducedMotion && (
@@ -52,8 +54,12 @@ function Backdrop() {
 }
 
 function Shell() {
+  const [, setReady] = useState(false);
+  const handleReady = useCallback(() => setReady(true), []);
+
   return (
     <div className="relative min-h-dvh text-[var(--color-ink)]">
+      <ScrapbookLoader onReady={handleReady} />
       <a href="#main" className="skip-link">
         Skip to the scrapbook
       </a>

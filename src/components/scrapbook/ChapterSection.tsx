@@ -83,7 +83,7 @@ export function ChapterSection({
       data-chapter={id}
       aria-labelledby={titleId}
       className={cn('chapter relative isolate overflow-x-clip', className)}
-      style={paletteVars(resolved) as React.CSSProperties}
+      style={{ contain: 'layout style', ...paletteVars(resolved) } as React.CSSProperties}
     >
       {/* Stock the chapter is printed on. */}
       <div aria-hidden="true" className="chapter-wash absolute inset-0 -z-10 bg-[var(--pal-bg)]" />
