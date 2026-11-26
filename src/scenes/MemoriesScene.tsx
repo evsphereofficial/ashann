@@ -24,14 +24,22 @@ const SPAN: Record<Memory['layout'], string> = {
   polaroid: '',
   filmstrip: '',
   postcard: 'sm:col-span-1',
-  editorial: 'sm:col-span-2',
+  editorial: 'col-span-2',
 };
 
 /**
- * Vertical stagger that breaks the grid: every print sits at a different
- * height so the row reads as a pile of photographs rather than a table.
+ * Vertical stagger that breaks the grid on tablet/desktop: every print sits at
+ * a different height so the row reads as a pile of photographs rather than a
+ * table. Disabled on `< sm` so 2-column mobile spreads stay tidy.
  */
-const COLLAGE_OFFSET = [0, 34, -10, 26, 48, 6] as const;
+const COLLAGE_OFFSET_CLASS = [
+  '',
+  'sm:mt-8',
+  'sm:-mt-2.5',
+  'sm:mt-6',
+  'sm:mt-12',
+  'sm:mt-1.5',
+] as const;
 
 /**
  * Scene 4 — the photographs.
@@ -42,7 +50,7 @@ const COLLAGE_OFFSET = [0, 34, -10, 26, 48, 6] as const;
  * open six dialogs.
  */
 export default function MemoriesScene() {
-  const { goToScene, openOverlay, reducedMotion } = useScrapbook();
+  const { openOverlay, reducedMotion } = useScrapbook();
   const scopeRef = useRef<HTMLDivElement | null>(null);
   const [showList, setShowList] = useState(false);
 
@@ -50,12 +58,23 @@ export default function MemoriesScene() {
   useChapterReveal(scopeRef);
 
   return (
-    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 pb-28 pt-16 sm:px-6 sm:pb-24">
       {/* ── Ground: notebook stock, torn corners, stamps and scatter ─────── */}
       <ArtImg
         src={background(PAPER.starredNotebook)}
         decorative
         className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[0.18] mix-blend-multiply"
+      />
+      <ArtImg
+        src={background(PAPER.grungeRed)}
+        decorative
+        className="pointer-events-none absolute -right-12 bottom-20 w-56 rotate-[12deg] opacity-40 mix-blend-multiply sm:w-72"
+      />
+      <ArtImg
+        src={element(ART.tornNewsCaption)}
+        decorative
+        data-parallax="0.22"
+        className="pointer-events-none absolute right-2 bottom-10 w-40 -rotate-[6deg] opacity-85 sm:right-10 sm:w-52"
       />
       <ArtImg
         src={element(ART.tornLinedCorner)}
@@ -83,17 +102,16 @@ export default function MemoriesScene() {
       />
 
       <div className="relative mx-auto w-full max-w-6xl">
-        <header data-reveal className="relative mb-6 max-w-2xl">
+        <header className="relative mb-6 max-w-2xl">
           <WashiTape variant="blush" className="absolute -top-6 left-8" rotate={4} />
-          <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 03 · PHOTOGRAPHS</p>
-          <h2 id="memories-title" className="type-masthead mt-2 text-[clamp(2rem,6vw,3.8rem)] leading-[0.95]">
+          <p data-reveal="write" className="type-label text-[11px] text-[var(--pal-accent,var(--color-valentine))]">CHAPTER 03 · PHOTOGRAPHS</p>
+          <h2 id="memories-title" data-reveal="left" className="type-masthead mt-2 text-[clamp(2rem,6vw,3.8rem)] leading-[0.95]">
             Six prints, six backs
           </h2>
-          <p className="mt-3 text-[var(--color-ink-soft)]">
-            Open any print to read the caption and the note on the back. Use the arrows inside the
-            viewer to move between them, and Escape to come back here.
+          <p data-reveal="write" data-reveal-delay="0.1" className="mt-3 text-[var(--color-ink-soft)]">
+            Open any print to read the caption and the note on the back.
           </p>
-          <p className="mt-3">
+          <p data-reveal="pop" className="mt-3">
             <PlaceholderTag value="[PLACEHOLDER: add your own photographs over these supplied paper scans]" />
           </p>
         </header>
@@ -103,14 +121,13 @@ export default function MemoriesScene() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.15 }}
-          className="grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4 sm:gap-6"
+          className="grid grid-cols-2 gap-3.5 sm:grid-cols-3 sm:gap-6 lg:grid-cols-4"
         >
           {memories.map((memory, index) => (
             <motion.div
               key={memory.id}
               variants={dropIn({ y: 74, rotate: memory.rotation - 20 }, memory.rotation)}
-              className={[SPAN[memory.layout], 'relative'].join(' ')}
-              style={{ marginTop: COLLAGE_OFFSET[index % COLLAGE_OFFSET.length] }}
+              className={[SPAN[memory.layout], COLLAGE_OFFSET_CLASS[index % COLLAGE_OFFSET_CLASS.length], 'relative'].join(' ')}
             >
               <WashiTape
                 variant={memory.layout === 'filmstrip' ? 'stripe' : 'grid'}
@@ -141,21 +158,7 @@ export default function MemoriesScene() {
             aria-expanded={showList}
             className="object-interactive rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-cream)] px-5 py-3 text-sm font-bold tracking-[0.1em] uppercase transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
           >
-            {showList ? 'Hide the caption list' : 'Read all six captions'}
-          </button>
-          <button
-            type="button"
-            onClick={() => goToScene('jojo')}
-            className="object-interactive rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-valentine)] px-6 py-3 text-sm font-bold tracking-[0.12em] text-[var(--color-cream)] uppercase transition hover:-translate-y-0.5 hover:bg-[#a83227] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ink)]"
-          >
-            Next: the cast →
-          </button>
-          <button
-            type="button"
-            onClick={() => goToScene('timeline')}
-            className="rounded-full border border-[#c9b79c] bg-[var(--color-cream)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
-          >
-            ← Back
+            {showList ? 'Hide captions' : 'Read all six captions'}
           </button>
         </div>
 

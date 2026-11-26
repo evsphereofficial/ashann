@@ -20,8 +20,8 @@ export function KeepsakeStar({ className, reduced = false }: { className?: strin
     let width = mount.clientWidth || 320;
     let height = mount.clientHeight || 320;
 
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: 'high-performance' });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
     renderer.setSize(width, height);
     renderer.domElement.style.display = 'block';
     mount.appendChild(renderer.domElement);
@@ -106,8 +106,13 @@ export function KeepsakeStar({ className, reduced = false }: { className?: strin
     let frame = 0;
     let progress = 0;
     let elapsed = 0;
+    let visible = true;
 
     const tick = () => {
+      if (!visible || document.hidden) {
+        frame = 0;
+        return;
+      }
       frame = window.requestAnimationFrame(tick);
       elapsed += 0.016;
 
@@ -134,7 +139,29 @@ export function KeepsakeStar({ className, reduced = false }: { className?: strin
       renderer.render(scene, camera);
     };
 
-    if (!reduced) tick();
+    const startLoop = () => {
+      if (!reduced && !frame && visible && !document.hidden) tick();
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        visible = entries.some((entry) => entry.isIntersecting);
+        if (visible) startLoop();
+        else if (frame) {
+          window.cancelAnimationFrame(frame);
+          frame = 0;
+        }
+      },
+      { threshold: 0.05 },
+    );
+    observer.observe(mount);
+
+    const onVisibility = () => {
+      if (!document.hidden) startLoop();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    if (!reduced) startLoop();
 
     const onResize = () => {
       width = mount.clientWidth || width;
@@ -147,6 +174,8 @@ export function KeepsakeStar({ className, reduced = false }: { className?: strin
     window.addEventListener('resize', onResize);
 
     return () => {
+      observer.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
       window.removeEventListener('resize', onResize);
       if (frame) window.cancelAnimationFrame(frame);
       geometry.dispose();

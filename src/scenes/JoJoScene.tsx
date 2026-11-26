@@ -1,15 +1,17 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
 import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { blueSubspreadIds, characters } from '@/content/characters';
 import type { CharacterAsset } from '@/content/types';
 import { characterPalette, paletteVars, CHARACTER_ORDER } from '@/content/palettes';
-import { PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
+import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
+import { WashiTape } from '@/components/scrapbook/WashiTape';
+import { HandwrittenNote } from '@/components/scrapbook/HandwrittenNote';
 import { ArtImg } from '@/components/scrapbook/ArtImg';
 import { gsap } from '@/lib/gsap';
-import { ART, element } from '@/lib/art';
+import { ART, PAPER, background, element } from '@/lib/art';
 
 /**
  * Chapter 04 — the JoJo fan magazine, one spread per character.
@@ -33,6 +35,14 @@ import { ART, element } from '@/lib/art';
 
 const SPREAD_LAYOUT = ['lg:grid-cols-[1.05fr_1fr]', 'lg:grid-cols-[1fr_1.05fr]'] as const;
 const HERO_ALIGN = ['object-right-bottom', 'object-left-bottom'] as const;
+const CHAR_DECOR = [
+  ART.pocketWatch,
+  ART.crownDoodle,
+  ART.bowDoodle,
+  ART.redButton,
+  ART.driedRoses,
+  ART.ribbonDoodle,
+] as const;
 
 function ginghamStyle(color: string): React.CSSProperties {
   return {
@@ -53,9 +63,11 @@ function CharacterSpread({
   const palette = characterPalette(character.id);
   const spreadRef = useRef<HTMLDivElement | null>(null);
   const heroRef = useRef<HTMLImageElement | null>(null);
+  const [spotIndex, setSpotIndex] = useState(character.heroIndex);
+  const [noteOpen, setNoteOpen] = useState(false);
+  const [sfxPopped, setSfxPopped] = useState(false);
 
-  const hero = character.gallery[character.heroIndex] ?? character.gallery[0];
-  const supporting = character.gallery.filter((_, i) => i !== character.heroIndex).slice(0, 2);
+  const hero = character.gallery[spotIndex] ?? character.gallery[character.heroIndex] ?? character.gallery[0];
   const even = index % 2 === 0;
 
   /* The cut-out climbs out of the torn edge as the spread is scrolled. */
@@ -129,6 +141,23 @@ function CharacterSpread({
         }}
       />
       <div aria-hidden="true" className="absolute inset-0 -z-10 material-halftone-lg opacity-[0.06]" />
+      <ArtImg
+        src={background(
+          index % 3 === 0
+            ? PAPER.redMangaPanels
+            : index % 3 === 1
+              ? PAPER.blackGingham
+              : PAPER.scriptOnBlack,
+        )}
+        decorative
+        className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover opacity-[0.09] mix-blend-multiply"
+      />
+      <ArtImg
+        src={element(ART.tornNewsEdge)}
+        decorative
+        data-parallax="0.16"
+        className="pointer-events-none absolute bottom-0 left-0 w-64 opacity-70 sm:w-96"
+      />
 
       {/* The tear that hands over to this palette. */}
       <div
@@ -146,13 +175,14 @@ function CharacterSpread({
 
       <div
         className={[
-          'relative z-10 mx-auto grid max-w-6xl items-center gap-6 px-4 py-20 sm:px-6 sm:py-24 lg:gap-10',
+          'relative z-10 mx-auto grid max-w-6xl items-center gap-6 px-4 py-14 sm:px-6 sm:py-24 lg:gap-10',
           SPREAD_LAYOUT[index % 2],
         ].join(' ')}
       >
         {/* ── editorial column ─────────────────────────────────────────── */}
-        <div data-reveal className={even ? '' : 'lg:order-2'}>
+        <div data-reveal={even ? 'left' : 'right'} className={even ? '' : 'lg:order-2'}>
           <p
+            data-reveal="write"
             className="type-label text-[11px]"
             style={{ color: palette.accent }}
           >
@@ -161,18 +191,19 @@ function CharacterSpread({
           </p>
 
           <h3
+            data-reveal={even ? 'left' : 'right'}
             className="type-masthead mt-2 text-[clamp(2.2rem,7vw,4.6rem)] leading-[0.9]"
             style={{ color: palette.ink }}
           >
             {character.name}
           </h3>
 
-          <p className="type-hand mt-2 text-[clamp(1.15rem,2.6vw,1.7rem)]" style={{ color: palette.accent }}>
+          <p data-reveal="write" data-reveal-delay="0.08" className="type-hand mt-2 text-[clamp(1.15rem,2.6vw,1.7rem)]" style={{ color: palette.accent }}>
             {palette.label}
           </p>
 
           {/* Palette swatches — the actual colours this spread is printed in. */}
-          <div className="mt-4 flex items-center gap-2" aria-hidden="true">
+          <div data-reveal="pop" className="mt-4 flex items-center gap-2" aria-hidden="true">
             {[palette.bg, palette.bgDeep, palette.accent, palette.gingham].map((swatch) => (
               <span
                 key={swatch}
@@ -184,9 +215,11 @@ function CharacterSpread({
 
           {/* The quote slot: empty on purpose, and marked as such. */}
           <blockquote className="mt-5 max-w-md border-l-4 pl-4" style={{ borderColor: palette.accent }}>
-            <p className="type-serif text-[clamp(1rem,2vw,1.2rem)] italic" style={{ color: palette.ink }}>
-              [PLACEHOLDER: add a quote]
-            </p>
+            <FilledOrPlaceholder
+              as="p"
+              value={character.quote ?? '[PLACEHOLDER: add a quote]'}
+              className="type-serif text-[clamp(1rem,2vw,1.2rem)] italic"
+            />
             <footer className="type-label mt-1 text-[10px]" style={{ color: palette.ink, opacity: 0.7 }}>
               {character.name} · {character.part}
             </footer>
@@ -205,80 +238,123 @@ function CharacterSpread({
             >
               Read the bio →
             </button>
-            <span className="type-label text-[10px]" style={{ color: palette.ink, opacity: 0.65 }}>
-              TAP THE CUT-OUT TOO
-            </span>
+            <button
+              type="button"
+              onClick={() => setNoteOpen((v) => !v)}
+              aria-expanded={noteOpen}
+              className="rounded-full border-2 bg-white/85 px-4 py-2.5 text-xs font-bold tracking-[0.1em] uppercase transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2"
+              style={{ borderColor: palette.accent, color: palette.ink }}
+            >
+              {noteOpen ? 'Fold note' : 'Flip zine note'}
+            </button>
           </div>
+
+          {noteOpen && (
+            <HandwrittenNote stock="note" rotate={even ? -1.4 : 1.4} taped className="mt-5 max-w-md">
+              <p className="type-label text-[10px]" style={{ color: palette.accent }}>
+                PAGE {String(index + 1).padStart(2, '0')} · {character.role.toUpperCase()}
+              </p>
+              <p className="mt-1 text-base leading-snug text-[var(--color-ink)]">
+                {hero?.note || `${character.name} — ${character.part}`}
+              </p>
+            </HandwrittenNote>
+          )}
         </div>
 
         {/* ── the cut-out, breaking its frame ──────────────────────────── */}
-        <div data-reveal className={['relative', even ? '' : 'lg:order-1'].join(' ')}>
+        <div data-reveal={even ? 'right' : 'left'} className={['relative', even ? '' : 'lg:order-1'].join(' ')}>
           {/* torn paper the hero rises from behind */}
           <div
             aria-hidden="true"
-            className="absolute inset-x-[-8%] bottom-[-6%] top-[18%] rounded-[14px] border-[6px] border-white shadow-[var(--shadow-lifted)]"
+            className="absolute inset-x-[-6%] bottom-[-4%] top-[18%] rounded-[14px] border-[6px] border-white shadow-[var(--shadow-lifted)] sm:inset-x-[-8%]"
             style={{ background: palette.paper, rotate: even ? '-2.5deg' : '2.5deg' }}
           >
-            <div className="absolute inset-0 material-paper opacity-70" />
+            <div className="material-paper absolute inset-0 opacity-70" />
+            <WashiTape
+              variant={even ? 'stripe' : 'grid'}
+              className="absolute -top-3 left-8"
+              rotate={even ? -6 : 5}
+              width="96px"
+            />
           </div>
 
           <button
             type="button"
             onClick={() => onOpen(character.id)}
             aria-label={`Open the bio for ${character.name}`}
-            className="group relative block w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-valentine)]"
+            className="group relative z-20 block w-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--color-valentine)]"
           >
             <ArtImg
               ref={heroRef}
               src={hero?.src ?? ''}
               alt={character.alt}
               className={[
-                'relative z-10 mx-auto h-[clamp(300px,52vw,560px)] w-full object-contain transition-[filter] duration-300',
+                'relative z-20 mx-auto h-[clamp(300px,52vw,520px)] w-full object-contain transition-[filter] duration-300',
                 HERO_ALIGN[index % 2],
                 'drop-shadow-[0_22px_26px_rgb(0_0_0/0.35)] group-hover:drop-shadow-[0_26px_30px_rgb(0_0_0/0.45)]',
               ].join(' ')}
             />
             <span
               aria-hidden="true"
-              className="absolute -right-1 bottom-2 z-20 rounded-full border-2 px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase opacity-0 transition-opacity duration-200 group-hover:opacity-100 group-focus-visible:opacity-100"
+              className="absolute -right-1 bottom-2 z-30 rounded-full border-2 px-3 py-1 text-[10px] font-bold tracking-[0.14em] uppercase opacity-90 transition-opacity duration-200 sm:opacity-0 sm:group-hover:opacity-100 sm:group-focus-visible:opacity-100"
               style={{ background: palette.accent, color: palette.paper, borderColor: palette.ink }}
             >
               Open bio
             </span>
           </button>
 
-          {/* supporting frames, taped beside the hero */}
-          <div className="relative z-20 mt-4 flex justify-center gap-3 sm:gap-4">
-            {supporting.map((art, i) => (
-              <button
-                key={art.src}
-                type="button"
-                onClick={() => onOpen(character.id)}
-                aria-label={`Open the bio for ${character.name} — frame ${i + 2}`}
-                className="w-24 border-[5px] border-white bg-white shadow-[var(--shadow-object)] transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)] sm:w-32"
-                style={{ rotate: i % 2 === 0 ? '-4deg' : '5deg' }}
-              >
-                <ArtImg
-                  src={art.src}
-                  alt={`${character.name} — ${art.note}`}
-                  className="block h-24 w-full object-cover object-top sm:h-32"
-                />
-              </button>
-            ))}
+          {/* All 5 supplied frames, tappable to switch the spotlighted pose */}
+          <div className="relative z-30 mt-4 flex flex-wrap justify-center gap-2 sm:gap-3" role="group" aria-label={`${character.name} poses`}>
+            {character.gallery.map((art, i) => {
+              const active = i === spotIndex;
+              return (
+                <button
+                  key={art.src}
+                  type="button"
+                  onClick={() => setSpotIndex(i)}
+                  aria-pressed={active}
+                  aria-label={`Spotlight ${character.name} frame ${i + 1}: ${art.note}`}
+                  className={[
+                    'w-14 border-[4px] bg-white shadow-[var(--shadow-object)] transition hover:-translate-y-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)] sm:w-20',
+                    active ? 'scale-105 border-[var(--color-valentine)]' : 'border-white opacity-85 hover:opacity-100',
+                  ].join(' ')}
+                  style={{ rotate: i % 2 === 0 ? '-3.5deg' : '4deg' }}
+                >
+                  <ArtImg
+                    src={art.src}
+                    alt={`${character.name} — ${art.note}`}
+                    className="block h-14 w-full object-cover object-top sm:h-20"
+                  />
+                </button>
+              );
+            })}
           </div>
 
-          {/* one manga SFX sticker per spread, used sparingly */}
-          <ArtImg
-            src={element(ART.sfxBang)}
-            decorative
-            data-parallax="0.3"
-            className="pointer-events-none absolute -left-4 top-4 z-20 w-16 -rotate-[14deg] opacity-95 sm:w-20"
-          />
+          {/* Tappable manga SFX sticker per spread */}
+          <button
+            type="button"
+            onClick={() => setSfxPopped((v) => !v)}
+            aria-label={`Pop sound effect sticker for ${character.name}`}
+            className="absolute -left-2 top-4 z-30 transition-transform duration-200 hover:scale-110 active:scale-95 sm:-left-4"
+            style={{ transform: sfxPopped ? 'scale(1.22) rotate(8deg)' : 'rotate(-14deg)' }}
+          >
+            <ArtImg
+              src={element(ART.sfxBang)}
+              decorative
+              className="w-16 opacity-95 drop-shadow-md sm:w-20"
+            />
+          </button>
           <ArtImg
             src={element(index % 2 === 0 ? ART.starCluster : ART.sparkles)}
             decorative
             data-parallax="0.22"
-            className="pointer-events-none absolute -right-3 top-10 z-20 w-20 opacity-90"
+            className="pointer-events-none absolute -right-2 top-10 z-10 w-16 opacity-90 sm:w-20"
+          />
+          <ArtImg
+            src={element(CHAR_DECOR[index % CHAR_DECOR.length])}
+            decorative
+            data-parallax="0.26"
+            className="pointer-events-none absolute -bottom-4 -left-3 z-10 w-14 opacity-90 lift-soft sm:w-20"
           />
         </div>
       </div>
@@ -287,7 +363,7 @@ function CharacterSpread({
 }
 
 export default function JoJoScene() {
-  const { goToScene, openOverlay, reducedMotion } = useScrapbook();
+  const { openOverlay, reducedMotion } = useScrapbook();
   const scopeRef = useRef<HTMLDivElement | null>(null);
 
   useParallax(scopeRef, !reducedMotion);
@@ -310,14 +386,13 @@ export default function JoJoScene() {
           decorative
           className="pointer-events-none absolute left-2 top-10 w-12 -rotate-[12deg]"
         />
-        <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 04 · THE MAGAZINE</p>
-        <h2 id="jojo-title" className="type-masthead mt-2 max-w-3xl text-[clamp(2.2rem,7vw,4.6rem)] leading-[0.9]">
+        <p data-reveal="write" className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 04 · THE MAGAZINE</p>
+        <h2 id="jojo-title" data-reveal="left" className="type-masthead mt-2 max-w-3xl text-[clamp(2.2rem,7vw,4.6rem)] leading-[0.9]">
           They keep turning up
         </h2>
-        <p className="mt-3 max-w-xl text-[var(--color-ink-soft)]">
+        <p data-reveal="write" data-reveal-delay="0.1" className="mt-3 max-w-xl text-[var(--color-ink-soft)]">
           Six recurring faces, cut out and taped in — one full-page spread each, printed in that
-          character&apos;s own colours. Tap a cut-out for the bio; every quote slot is empty on
-          purpose until there is a line you can actually attribute.
+          character&apos;s own colours.
         </p>
       </header>
 
@@ -332,20 +407,20 @@ export default function JoJoScene() {
       ))}
 
       {/* ── The blue sub-spread note ─────────────────────────────────────── */}
-      <div className="relative mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="relative max-w-2xl rounded-[10px] border border-[#b9cbe0] bg-[#e7eff7] p-5 shadow-[var(--shadow-paper)]">
+      <div className="relative mx-auto max-w-6xl px-4 pb-24 pt-14 sm:px-6 sm:pb-24">
+        <div className="relative max-w-2xl overflow-hidden rounded-[10px] border border-[#b9cbe0] bg-[#e7eff7] p-5 shadow-[var(--shadow-paper)] sm:p-6">
           <ArtImg
             src={element(ART.cornerFlourish)}
             decorative
-            className="pointer-events-none absolute -right-4 -top-6 w-28 opacity-80"
+            className="pointer-events-none absolute -bottom-6 -right-6 w-24 opacity-45 sm:w-28"
           />
           <p className="type-label text-[10px] text-[var(--color-steel)]">THE BLUE SUB-SPREAD</p>
           <h3 className="type-serif mt-1 text-2xl text-[#26364a]">Inked in blue</h3>
-          <p className="mt-2 text-sm leading-relaxed text-[#3d5069]">
+          <p className="relative z-10 mt-2 text-sm leading-relaxed text-[#3d5069]">
             A quieter page folded in behind the loud one — the cut-outs chosen for blue ink sit here
             instead of on the main spread.
           </p>
-          <ul className="mt-4 flex flex-wrap gap-2">
+          <ul className="relative z-10 mt-4 flex flex-wrap gap-2">
             {blue.map((character) => (
               <li key={character.id}>
                 <button
@@ -364,26 +439,9 @@ export default function JoJoScene() {
               </li>
             ))}
           </ul>
-          <p className="mt-4">
+          <p className="relative z-10 mt-4">
             <PlaceholderTag value="[PLACEHOLDER: confirm which characters are drawn in blue]" />
           </p>
-        </div>
-
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => goToScene('keepsakes')}
-            className="object-interactive rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-valentine)] px-6 py-3 text-sm font-bold tracking-[0.12em] text-[var(--color-cream)] uppercase transition hover:-translate-y-0.5 hover:bg-[#a83227] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ink)]"
-          >
-            Next: the keepsakes →
-          </button>
-          <button
-            type="button"
-            onClick={() => goToScene('memories')}
-            className="rounded-full border border-[#c9b79c] bg-[var(--color-cream)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
-          >
-            ← Back
-          </button>
         </div>
       </div>
     </div>

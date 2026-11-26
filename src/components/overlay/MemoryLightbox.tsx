@@ -98,7 +98,7 @@ export function MemoryLightbox() {
                 type="button"
                 data-autofocus
                 onClick={closeOverlay}
-                className="shrink-0 rounded-full border border-[#c2a97f] bg-white px-3 py-1.5 text-sm font-semibold hover:bg-[#fff6e4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
+                className="min-h-[42px] shrink-0 rounded-full border border-[#c2a97f] bg-white px-4 py-1.5 text-sm font-semibold hover:bg-[#fff6e4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)] sm:min-h-0 sm:px-3"
               >
                 Close
               </button>
@@ -110,6 +110,7 @@ export function MemoryLightbox() {
                 <img
                   src={memory.image}
                   alt={memory.alt}
+                  decoding="async"
                   className="w-full rounded-[3px] border border-[#c9b79c] bg-white"
                 />
               </div>

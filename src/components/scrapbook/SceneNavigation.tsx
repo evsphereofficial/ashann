@@ -1,36 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { motion } from 'framer-motion';
 import { SCENE_ORDER, useScrapbook } from './ScrapbookContext';
 import { SCENE_META } from '@/scenes/registry';
 
-const CHEVRON = (
-  <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2.5">
-    <path d="M9 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-  </svg>
-);
-
-/**
- * Discreet chapter navigation for a document you scroll rather than page
- * through. Three parts, none of which behave like a tab bar:
- *
- *  1. a **progress rail** down the right edge — pure orientation, showing how
- *     far through the scrapbook you are and which chapter sits where;
- *  2. a **compact contents control** in the bottom bar that names the current
- *     chapter and opens the full index overlay, so the list of chapters is one
- *     control away without occupying the page;
- *  3. **prev / next chapter** buttons — the keyboard and screen-reader route
- *     to the same place the rail points at.
- *
- * Arrow keys still step chapters (scoped out when a widget that uses arrows
- * itself has focus), and every control is a real `<button>`.
- */
 export function SceneNavigation() {
-  const { scene, sceneIndex, goToScene, nextScene, prevScene, overlay, openOverlay, reducedMotion, progress } =
+  const { scene, sceneIndex, goToScene, nextScene, prevScene, overlay, openOverlay, progress } =
     useScrapbook();
-  const isFirst = sceneIndex === 0;
-  const isLast = sceneIndex === SCENE_ORDER.length - 1;
   const [railVisible, setRailVisible] = useState(false);
 
   useEffect(() => {
@@ -124,28 +100,18 @@ export function SceneNavigation() {
         </nav>
       </div>
 
-      {/* ── Compact bottom bar: prev / contents / next ────────────────────── */}
-      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center pb-3 sm:pb-4">
+      {/* ── Compact bottom bar: current chapter pill (opens contents) ───────── */}
+      <div className="pointer-events-none fixed inset-x-0 bottom-0 z-40 flex justify-center pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:pb-4">
         <div
           data-arrow-scope="scenes"
-          className="pointer-events-auto flex max-w-[calc(100vw-1rem)] items-center gap-2 rounded-full border border-[#c9b79c] bg-[#f6ecd8]/95 px-2 py-1.5 shadow-[0_-8px_24px_rgba(26,16,7,0.28)] backdrop-blur-sm sm:gap-3 sm:px-3"
+          className="pointer-events-auto flex max-w-[calc(100vw-1rem)] items-center rounded-full border border-[#c9b79c] bg-[#f6ecd8]/95 p-1.5 shadow-[0_-8px_24px_rgba(26,16,7,0.28)] backdrop-blur-sm"
         >
-          <button
-            type="button"
-            onClick={prevScene}
-            disabled={isFirst}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#b9a587] bg-white text-[var(--color-ink)] transition hover:bg-[#fff6e4] disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)] [&>svg]:rotate-180"
-            aria-label="Previous chapter"
-          >
-            {CHEVRON}
-          </button>
-
           {/* Contents: names the current chapter, opens the full index. */}
           <button
             type="button"
             onClick={() => openOverlay({ type: 'index' })}
             aria-haspopup="dialog"
-            className="flex min-w-0 items-center gap-2 rounded-full border border-[#c2a97f] bg-[#fffaf0] px-3 py-2 text-left transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
+            className="flex min-h-[40px] min-w-0 items-center gap-2 rounded-full border border-[#c2a97f] bg-[#fffaf0] px-4 py-1.5 text-left transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
           >
             <span className="font-[family-name:var(--font-anton)] text-[11px] tracking-[0.14em] text-[var(--color-valentine)]">
               {activeMeta.chapter}
@@ -155,20 +121,10 @@ export function SceneNavigation() {
             </span>
             <span
               aria-hidden="true"
-              className="hidden shrink-0 text-[10px] font-bold tracking-[0.14em] text-[#8a7a5f] uppercase sm:inline"
+              className="shrink-0 text-[10px] font-bold tracking-[0.14em] text-[#8a7a5f] uppercase"
             >
               ▸ contents
             </span>
-          </button>
-
-          <button
-            type="button"
-            onClick={nextScene}
-            disabled={isLast}
-            className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[#b9a587] bg-white text-[var(--color-ink)] transition hover:bg-[#fff6e4] disabled:cursor-not-allowed disabled:opacity-35 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
-            aria-label="Next chapter"
-          >
-            {CHEVRON}
           </button>
         </div>
       </div>
@@ -185,30 +141,6 @@ export function SceneNavigation() {
       <p aria-live="polite" className="sr-only">
         Now reading chapter {activeMeta.chapter}, {activeMeta.label}.
       </p>
-
-      {/* Scroll cue on the cover only — retires itself once the reader moves. */}
-      {!reducedMotion && railVisible === false && <ScrollCue />}
     </>
-  );
-}
-
-function ScrollCue() {
-  return (
-    <motion.div
-      aria-hidden="true"
-      initial={{ opacity: 0, y: -6 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.5, delay: 1.4 }}
-      className="pointer-events-none fixed inset-x-0 bottom-20 z-30 flex justify-center"
-    >
-      <motion.span
-        animate={{ y: [0, 6, 0] }}
-        transition={{ duration: 1.8, repeat: Infinity, ease: 'easeInOut' }}
-        className="rounded-full border border-[#c9b79c] bg-[#fffaf0]/95 px-3 py-1.5 text-[10px] font-bold tracking-[0.2em] text-[#6b5b41] uppercase shadow-[var(--shadow-paper)]"
-      >
-        scroll ↓
-      </motion.span>
-    </motion.div>
   );
 }

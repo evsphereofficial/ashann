@@ -107,7 +107,7 @@ body {
 .material-paper {
   background-color: var(--color-paper);
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='220' height='220' filter='url(%23n)' opacity='0.32'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)' opacity='0.3'/%3E%3C/svg%3E"),
     radial-gradient(120% 90% at 12% 6%, rgb(255 255 255 / 0.75), transparent 55%),
     radial-gradient(100% 80% at 88% 96%, rgb(169 133 90 / 0.22), transparent 60%);
 }
@@ -115,7 +115,7 @@ body {
 .material-kraft {
   background-color: var(--color-kraft);
   background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23k)' opacity='0.4'/%3E%3C/svg%3E"),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='k'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23k)' opacity='0.38'/%3E%3C/svg%3E"),
     linear-gradient(150deg, rgb(255 255 255 / 0.18), transparent 45%);
 }
 
@@ -126,8 +126,8 @@ body {
     radial-gradient(circle at 70% 60%, rgb(90 58 32 / 0.45) 0 2.5px, transparent 3.5px),
     radial-gradient(circle at 45% 85%, rgb(140 96 58 / 0.4) 0 1.5px, transparent 2.5px),
     radial-gradient(circle at 88% 15%, rgb(100 64 36 / 0.4) 0 2px, transparent 3px),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23c)' opacity='0.5'/%3E%3C/svg%3E");
-  background-size: 60px 60px, 70px 70px, 45px 45px, 80px 80px, 160px 160px;
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='c'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23c)' opacity='0.45'/%3E%3C/svg%3E");
+  background-size: 60px 60px, 70px 70px, 45px 45px, 80px 80px, 140px 140px;
 }
 
 /* Manga screentone / halftone. */
@@ -340,14 +340,14 @@ body {
    ========================================================================= */
 
 .stage-clip {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .cover-stage {
   transform: translateX(0);
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .cover-stage {
     transform: translateX(-25%);
   }
@@ -435,6 +435,18 @@ body {
   }
   50% {
     translate: 0 -7px;
+  }
+}
+
+@keyframes idle-sway {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translate3d(2%, 1.5%, 0) scale(1.04);
+    opacity: 1;
   }
 }
 

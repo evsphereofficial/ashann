@@ -34,14 +34,14 @@ const KeepsakeStar = dynamic(
  * live here, so the book never ends in a dead end.
  */
 export default function FinaleScene() {
-  const { goToScene, openOverlay, reducedMotion, sceneIndex } = useScrapbook();
+  const { goToScene, openOverlay, reducedMotion } = useScrapbook();
   const scopeRef = useRef<HTMLDivElement | null>(null);
 
   useParallax(scopeRef, !reducedMotion);
   useChapterReveal(scopeRef);
 
   return (
-    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 pb-28 pt-16 sm:px-6 sm:pb-24">
       {/* ── Ground: the star wallpaper the finale is printed on ──────────── */}
       <ArtImg
         src={background(PAPER.starWallpaper)}
@@ -114,12 +114,12 @@ export default function FinaleScene() {
                 className="pointer-events-none absolute right-6 top-6 w-10"
               />
 
-              <p className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 08 · FINALE</p>
-              <h2 id="finale-title" className="type-masthead mt-2 text-[clamp(1.9rem,5.5vw,3.4rem)] leading-[0.95]">
+              <p data-reveal="write" className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 07 · FINALE</p>
+              <h2 id="finale-title" data-reveal="right" className="type-masthead mt-2 text-[clamp(1.9rem,5.5vw,3.4rem)] leading-[0.95]">
                 That is the whole book
               </h2>
 
-              <div className="mt-5 border-l-2 border-dashed border-[#c9b79c] pl-4">
+              <div data-reveal="write" data-reveal-delay="0.12" className="mt-5 border-l-2 border-dashed border-[#c9b79c] pl-4">
                 <FilledOrPlaceholder
                   as="p"
                   value={anniversary.finaleMessage}
@@ -140,28 +140,16 @@ export default function FinaleScene() {
                   onClick={() => goToScene('cover')}
                   className="object-interactive rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-valentine)] px-6 py-3 text-sm font-bold tracking-[0.12em] text-[var(--color-cream)] uppercase transition hover:-translate-y-0.5 hover:bg-[#a83227] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ink)]"
                 >
-                  ↺ Replay the scrapbook
+                  ↺ Back to the beginning
                 </button>
                 <button
                   type="button"
                   onClick={() => openOverlay({ type: 'index' })}
                   className="object-interactive rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-cream)] px-6 py-3 text-sm font-bold tracking-[0.12em] uppercase transition hover:-translate-y-0.5 hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
                 >
-                  Open the contents
-                </button>
-                <button
-                  type="button"
-                  onClick={() => goToScene('letter')}
-                  className="rounded-full border border-[#c9b79c] bg-[var(--color-cream)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
-                >
-                  ← Back to the letter
+                  Contents
                 </button>
               </div>
-
-              <p className="mt-5 text-xs text-[var(--color-ink-soft)]">
-                Chapter {sceneIndex + 1} of 8 · no audio ships with this page, and nothing plays
-                unless you ask it to.
-              </p>
             </PaperLayer>
           </motion.div>
         </motion.div>

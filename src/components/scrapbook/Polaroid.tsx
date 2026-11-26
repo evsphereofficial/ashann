@@ -62,7 +62,7 @@ export function Polaroid({
             ? { type: "button" as const, onClick, "aria-label": caption ?? alt }
             : {})}
           className={cn(
-            "block w-full bg-white p-2.5 pb-1 text-left shadow-lifted",
+            "block w-full bg-white p-1.5 pb-1 text-left shadow-lifted sm:p-2.5 sm:pb-1",
             interactive && "object-interactive border-0",
           )}
           style={{ backfaceVisibility: "hidden" }}
@@ -76,7 +76,7 @@ export function Polaroid({
               alt={alt}
               fill
               priority={priority}
-              sizes="(max-width: 768px) 70vw, 30vw"
+              sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 22vw"
               className={cn("object-cover", imageClassName)}
             />
             <span
@@ -90,7 +90,7 @@ export function Polaroid({
             />
           </span>
           {caption ? (
-            <span className="type-hand mt-2 block px-1 pb-1 text-center text-[1.05rem] leading-snug text-ink">
+            <span className="type-hand mt-1.5 block px-1 pb-1 text-center text-sm leading-snug text-ink sm:mt-2 sm:text-[1.05rem]">
               {caption}
             </span>
           ) : (

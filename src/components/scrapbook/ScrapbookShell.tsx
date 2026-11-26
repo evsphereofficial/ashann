@@ -24,7 +24,7 @@ function Backdrop() {
   const palette = chapterPalettes[scene];
 
   return (
-    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden">
+    <div aria-hidden="true" className="fixed inset-0 -z-10 overflow-hidden transform-gpu">
       {/* Chapter wash — cross-fades as the scroll spy changes. */}
       <div
         className="absolute inset-0 transition-[background-color] duration-[900ms] ease-in-out"
@@ -38,7 +38,7 @@ function Backdrop() {
       />
 
       {/* Paper grain over everything, so margins read as stock not flat colour. */}
-      <div className="material-paper absolute inset-0 opacity-45 mix-blend-multiply" />
+      <div className="material-paper absolute inset-0 opacity-35 mix-blend-multiply sm:opacity-45" />
 
       {/* Warm desk light, drifting just enough to feel alive. */}
       {!reducedMotion && (

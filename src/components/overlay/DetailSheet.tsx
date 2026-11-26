@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { characters } from '@/content/characters';
 import { keepsakes } from '@/content/keepsakes';
@@ -16,6 +16,7 @@ export function DetailSheet() {
   const { overlay, closeOverlay, reducedMotion } = useScrapbook();
   const open = overlay !== null && (overlay.type === 'keepsake' || overlay.type === 'character');
   const containerRef = useFocusTrap(open);
+  const [selectedFrame, setSelectedFrame] = useState<{ charId: string; index: number } | null>(null);
 
   useEffect(() => {
     if (!open) return;
@@ -40,6 +41,12 @@ export function DetailSheet() {
   const isCharacter = Boolean(character);
   const title = character?.name ?? keepsake?.title ?? '';
   const kind = isCharacter ? 'Cast member' : 'Keepsake';
+  const gallery = character?.gallery ?? [];
+  const activeFrame =
+    character && selectedFrame?.charId === character.id
+      ? selectedFrame.index
+      : (character?.heroIndex ?? 0);
+  const selectedArt = gallery[activeFrame] ?? gallery[character?.heroIndex ?? 0];
 
   return (
     <AnimatePresence>
@@ -62,11 +69,11 @@ export function DetailSheet() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="detail-sheet-title"
-            initial={{ y: reducedMotion ? 0 : 30, opacity: 0, rotate: reducedMotion ? 0 : -1 }}
-            animate={{ y: 0, opacity: 1, rotate: -0.5 }}
+            initial={{ y: reducedMotion ? 0 : 30, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
             exit={{ y: reducedMotion ? 0 : 24, opacity: 0 }}
             transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 250, damping: 25 }}
-            className="relative z-10 max-h-[90dvh] w-full max-w-lg overflow-y-auto rounded-[8px] border border-[#d8c9a9] bg-[var(--color-cream)] p-5 shadow-[var(--shadow-lifted)] sm:p-6"
+            className="relative z-10 max-h-[90dvh] w-[calc(100vw-1.5rem)] max-w-lg overflow-y-auto rounded-[8px] border border-[#d8c9a9] bg-[var(--color-cream)] p-5 shadow-[var(--shadow-lifted)] sm:p-6"
           >
             <div className="flex items-start justify-between gap-4">
               <div className="min-w-0">
@@ -84,19 +91,57 @@ export function DetailSheet() {
                 type="button"
                 data-autofocus
                 onClick={closeOverlay}
-                className="shrink-0 rounded-full border border-[#c2a97f] bg-white px-3 py-1.5 text-sm font-semibold hover:bg-[#fff6e4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
+                className="min-h-[42px] shrink-0 rounded-full border border-[#c2a97f] bg-white px-4 py-1.5 text-sm font-semibold hover:bg-[#fff6e4] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)] sm:min-h-0 sm:px-3"
               >
                 Close
               </button>
             </div>
 
             {character ? (
-              <div
-                className="mt-4 overflow-hidden rounded-[6px] border-[3px] border-white shadow-lifted"
-                style={{ background: character.accent }}
-              >
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={character.image} alt={character.alt} className="h-44 w-full object-cover object-top" />
+              <div className="mt-4 space-y-3">
+                <div
+                  className="relative overflow-hidden rounded-[6px] border-[3px] border-white p-2 shadow-lifted"
+                  style={{ background: character.accent }}
+                >
+                  <div aria-hidden="true" className="material-halftone absolute inset-0 opacity-15 text-white" />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={selectedArt?.src ?? character.image}
+                    alt={selectedArt ? `${character.name} — ${selectedArt.note}` : character.alt}
+                    decoding="async"
+                    className="relative z-10 mx-auto h-52 w-full object-contain sm:h-60"
+                  />
+                </div>
+                {gallery.length > 1 ? (
+                  <div className="flex flex-wrap justify-center gap-2" role="group" aria-label="Character frames">
+                    {gallery.map((art, i) => {
+                      const active = i === activeFrame;
+                      return (
+                        <button
+                          key={art.src}
+                          type="button"
+                          onClick={() => character && setSelectedFrame({ charId: character.id, index: i })}
+                          aria-pressed={active}
+                          aria-label={`View frame ${i + 1}: ${art.note}`}
+                          className={[
+                            'h-12 w-12 overflow-hidden rounded-[4px] border-2 bg-white p-0.5 transition',
+                            active
+                              ? 'border-[var(--color-valentine)] scale-105 shadow-sm'
+                              : 'border-[#c9b79c] opacity-75 hover:opacity-100',
+                          ].join(' ')}
+                        >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={art.src}
+                            alt=""
+                            decoding="async"
+                            className="h-full w-full object-cover object-top"
+                          />
+                        </button>
+                      );
+                    })}
+                  </div>
+                ) : null}
               </div>
             ) : null}
 
@@ -126,7 +171,7 @@ export function DetailSheet() {
               </blockquote>
             ) : null}
 
-            {character ? (
+            {character && character.image.endsWith('.svg') ? (
               <p className="mt-4 rounded-[6px] border border-dashed border-[#c2a97f] bg-[#fffaf0] p-3 text-sm text-[var(--color-ink-soft)]">
                 <span className="type-label mr-2 text-[11px] text-[var(--color-valentine)]">ARTWORK</span>
                 Placeholder cut-out. Drop artwork you hold rights to at{' '}

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type KeyboardEvent, type RefObject } from 'react';
 import { motion, useMotionValue } from 'framer-motion';
-import { gsap, type GsapTimeline } from '@/lib/gsap';
+import { gsap } from '@/lib/gsap';
 import { stickerPop } from '@/lib/motion';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
 import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
@@ -34,8 +34,8 @@ import { ART, PAPER, background, element, frame } from '@/lib/art';
 
 const STICKER_SLOTS = [
   { left: '3%', top: '72%' },
-  { left: '38%', top: '84%' },
-  { left: '70%', top: '64%' },
+  { left: '30%', top: '82%' },
+  { left: '54%', top: '64%' },
 ] as const;
 
 const STICKER_LABELS = ['SIX MONTHS', 'TAP EVERYTHING', 'DRAG ME'] as const;
@@ -137,39 +137,43 @@ function PlacedSticker({
 }
 
 export default function OpeningScene() {
-  const { goToScene, openOverlay, reducedMotion } = useScrapbook();
+  const { openOverlay, reducedMotion } = useScrapbook();
   const scopeRef = useRef<HTMLDivElement | null>(null);
   const boardRef = useRef<HTMLDivElement | null>(null);
-  const timelineRef = useRef<GsapTimeline | null>(null);
   const [placed, setPlaced] = useState<number[]>([]);
   const [status, setStatus] = useState('');
 
   useParallax(scopeRef, !reducedMotion);
   useChapterReveal(scopeRef);
 
-  /* Assembly: the spread builds itself in one continuous GSAP pass. */
+  /* Assembly: each piece animates individually as you scroll to it. */
   useEffect(() => {
     if (reducedMotion || !boardRef.current) return;
 
     const items = Array.from(boardRef.current.querySelectorAll<HTMLElement>('[data-assemble]'));
     if (items.length === 0) return;
 
-    const timeline = gsap.timeline({ delay: 0.1 });
-    timeline.from(items, {
-      y: 64,
-      opacity: 0,
-      rotate: -7,
-      duration: 0.75,
-      stagger: 0.13,
-      ease: 'power3.out',
-    });
+    const ctx = gsap.context(() => {
+      items.forEach((item, index) => {
+        gsap.from(item, {
+          y: 52,
+          x: index % 2 === 0 ? -24 : 24,
+          opacity: 0,
+          rotate: index % 2 === 0 ? -5 : 5,
+          scale: 0.94,
+          duration: 0.75,
+          ease: 'power3.out',
+          clearProps: 'opacity,transform',
+          scrollTrigger: {
+            trigger: item,
+            start: 'top 90%',
+            once: true,
+          },
+        });
+      });
+    }, boardRef);
 
-    timelineRef.current = timeline;
-    return () => {
-      timeline.kill();
-      gsap.set(items, { clearProps: 'opacity,transform' });
-      timelineRef.current = null;
-    };
+    return () => ctx.revert();
   }, [reducedMotion]);
 
   const place = (index: number) => {
@@ -183,7 +187,7 @@ export default function OpeningScene() {
   };
 
   return (
-    <div ref={scopeRef} className="scene-stage relative px-4 py-16 sm:px-6">
+    <div ref={scopeRef} className="scene-stage relative px-4 pb-28 pt-16 sm:px-6 sm:pb-24">
       {/* ── Ground: blue collage paper, torn edge, scattered supplied art ── */}
       <ArtImg
         src={background(PAPER.blueShatteredStars)}
@@ -214,6 +218,18 @@ export default function OpeningScene() {
         data-parallax="0.16"
         className="pointer-events-none absolute right-10 top-4 w-36 opacity-70"
       />
+      <ArtImg
+        src={element(ART.minaret)}
+        decorative
+        data-parallax="0.24"
+        className="pointer-events-none absolute left-4 top-12 hidden w-24 opacity-60 sm:block"
+      />
+      <ArtImg
+        src={element(ART.bowDoodle)}
+        decorative
+        data-parallax="0.28"
+        className="pointer-events-none absolute bottom-12 left-1/3 hidden w-16 rotate-[12deg] opacity-85 sm:block"
+      />
 
       <div className="relative mx-auto w-full max-w-6xl">
         <ArtImg
@@ -224,12 +240,12 @@ export default function OpeningScene() {
         />
 
         <div ref={boardRef} className="relative">
-          {/* Wamuu, cut out and slid in behind the page */}
+          {/* Wamuu, cut out and layered on top of the right edge */}
           <ArtImg
             src={frame('wamuu', 4)}
-            alt="Wamuu in blue armour — supplied cut-out tucked behind the opening page."
+            alt="Wamuu in blue armour — supplied cut-out tucked onto the opening page."
             data-parallax="0.26"
-            className="pointer-events-none absolute -top-10 right-0 z-0 hidden h-[118%] w-[42%] object-contain object-right-top opacity-95 drop-shadow-[0_18px_22px_rgb(18_48_56/0.35)] lg:block"
+            className="pointer-events-none absolute -top-10 right-0 z-20 hidden h-[112%] w-[40%] object-contain object-right-top opacity-95 drop-shadow-[0_18px_22px_rgb(18_48_56/0.35)] lg:block"
           />
 
           <div className="grid items-start gap-6 lg:grid-cols-[1.3fr_1fr]">
@@ -253,11 +269,12 @@ export default function OpeningScene() {
                   className="pointer-events-none absolute -bottom-8 -left-6 hidden w-32 rotate-[-9deg] opacity-95 lift-soft sm:block"
                 />
 
-                <p className="type-label text-[11px] text-[var(--color-valentine)]">
+                <p data-reveal="write" className="type-label text-[11px] text-[var(--pal-accent,var(--color-valentine))]">
                   CHAPTER 01 · WHAT THIS IS
                 </p>
                 <h2
                   id="opening-title"
+                  data-reveal="left"
                   className="type-masthead mt-2 text-[clamp(2.1rem,6.5vw,4.2rem)] leading-[0.92]"
                 >
                   {anniversary.conceptTitle}
@@ -268,24 +285,26 @@ export default function OpeningScene() {
                   className="type-hand mt-4 text-[clamp(1.25rem,3vw,1.9rem)] leading-tight text-[var(--color-steel)]"
                 />
 
-                <HandwrittenNote stock="sticky" rotate={-1.6} className="mt-6 max-w-lg">
-                  {anniversary.openingNote}
-                </HandwrittenNote>
+                <div data-reveal="write" data-reveal-delay="0.12">
+                  <HandwrittenNote stock="sticky" rotate={-1.6} className="mt-6 max-w-lg">
+                    {anniversary.openingNote}
+                  </HandwrittenNote>
+                </div>
 
                 <ul className="mt-7 grid gap-3 border-t border-dashed border-[#c9b79c] pt-5 sm:grid-cols-3">
-                  <li className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
+                  <li data-reveal="pop" className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
                     <span className="type-label block text-[10px] text-[var(--color-valentine)]">TAP</span>
                     <span className="text-sm text-[var(--color-ink-soft)]">
                       Every object answers when you tap it.
                     </span>
                   </li>
-                  <li className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
+                  <li data-reveal="pop" data-reveal-delay="0.08" className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
                     <span className="type-label block text-[10px] text-[var(--color-valentine)]">DRAG</span>
                     <span className="text-sm text-[var(--color-ink-soft)]">
                       Or move things with the arrow keys.
                     </span>
                   </li>
-                  <li className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
+                  <li data-reveal="pop" data-reveal-delay="0.16" className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
                     <span className="type-label block text-[10px] text-[var(--color-valentine)]">ESCAPE</span>
                     <span className="text-sm text-[var(--color-ink-soft)]">
                       Closes anything you have opened.
@@ -368,23 +387,6 @@ export default function OpeningScene() {
         <p aria-live="polite" className="sr-only">
           {status}
         </p>
-
-        <div data-assemble className="mt-10 flex flex-wrap items-center justify-center gap-3">
-          <button
-            type="button"
-            onClick={() => goToScene('timeline')}
-            className="object-interactive rounded-full border-2 border-[var(--color-ink)] bg-[var(--color-valentine)] px-6 py-3 text-sm font-bold tracking-[0.12em] text-[var(--color-cream)] uppercase transition hover:-translate-y-0.5 hover:bg-[#a83227] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-ink)]"
-          >
-            Next: the six months →
-          </button>
-          <button
-            type="button"
-            onClick={() => goToScene('cover')}
-            className="rounded-full border border-[#c9b79c] bg-[var(--color-cream)] px-5 py-3 text-sm font-semibold text-[var(--color-ink)] transition hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--color-valentine)]"
-          >
-            ← Back to the cover
-          </button>
-        </div>
       </div>
 
       {/* Star scatter, kept for the sticker-box accent */}
