@@ -1,0 +1,942 @@
+{
+  "Background": [
+    {
+      "file": "Background/#wallpaper #preppy #stars #fyp #myfirstshuffle.jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#797977"
+    },
+    {
+      "file": "Background/download (16).jpg",
+      "width": 345,
+      "height": 345,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#b38a7e"
+    },
+    {
+      "file": "Background/download (18).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#f0e9e5"
+    },
+    {
+      "file": "Background/download (20).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#6f6f6f"
+    },
+    {
+      "file": "Background/download (21).jpg",
+      "width": 675,
+      "height": 1200,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#eeedee"
+    },
+    {
+      "file": "Background/download (22).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#d9d8d3"
+    },
+    {
+      "file": "Background/download (23).jpg",
+      "width": 384,
+      "height": 736,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#1c1c1c"
+    },
+    {
+      "file": "Background/download (24).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#202020"
+    },
+    {
+      "file": "Background/download (25).jpg",
+      "width": 720,
+      "height": 1280,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#5e5e5e"
+    },
+    {
+      "file": "Background/download (26).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#83756b"
+    },
+    {
+      "file": "Background/download (27).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#6e7677"
+    },
+    {
+      "file": "Background/download (28).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#762e2b"
+    },
+    {
+      "file": "Background/Practice unit, found object print on a charcoal background_ Louise.jpg",
+      "width": 736,
+      "height": 1083,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#bcbcbc"
+    }
+  ],
+  "Doppio": [
+    {
+      "file": "Doppio/ComfyUI_00070_.png",
+      "width": 2000,
+      "height": 2000,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.01,
+      "averageColour": "#935d68"
+    },
+    {
+      "file": "Doppio/ComfyUI_00071_.png",
+      "width": 2940,
+      "height": 2840,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.26,
+      "averageColour": "#a07d9b"
+    },
+    {
+      "file": "Doppio/ComfyUI_00072_.png",
+      "width": 1872,
+      "height": 2916,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.42,
+      "averageColour": "#553545"
+    },
+    {
+      "file": "Doppio/ComfyUI_00073_.png",
+      "width": 2160,
+      "height": 3640,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.19,
+      "averageColour": "#7c4b55"
+    },
+    {
+      "file": "Doppio/ComfyUI_00074_.png",
+      "width": 1524,
+      "height": 1524,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.45,
+      "averageColour": "#6d474d"
+    }
+  ],
+  "Elements": [
+    {
+      "file": "Elements/ComfyUI_00103_.png",
+      "width": 2944,
+      "height": 5232,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.68,
+      "averageColour": "#2e3a41"
+    },
+    {
+      "file": "Elements/ComfyUI_00104_.png",
+      "width": 2944,
+      "height": 3476,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.3,
+      "averageColour": "#79624d"
+    },
+    {
+      "file": "Elements/ComfyUI_00105_.png",
+      "width": 2800,
+      "height": 3448,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.55,
+      "averageColour": "#561f2b"
+    },
+    {
+      "file": "Elements/ComfyUI_00106_.png",
+      "width": 1588,
+      "height": 2976,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.48,
+      "averageColour": "#584331"
+    },
+    {
+      "file": "Elements/ComfyUI_00107_.png",
+      "width": 2940,
+      "height": 3696,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.25,
+      "averageColour": "#66513b"
+    },
+    {
+      "file": "Elements/ComfyUI_00108_.png",
+      "width": 2876,
+      "height": 4728,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.68,
+      "averageColour": "#4c4235"
+    },
+    {
+      "file": "Elements/ComfyUI_00109_.png",
+      "width": 2012,
+      "height": 4152,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.58,
+      "averageColour": "#584f42"
+    },
+    {
+      "file": "Elements/ComfyUI_00110_.png",
+      "width": 2108,
+      "height": 3904,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.44,
+      "averageColour": "#55463a"
+    },
+    {
+      "file": "Elements/ComfyUI_00111_.png",
+      "width": 2012,
+      "height": 3292,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.48,
+      "averageColour": "#786d5a"
+    },
+    {
+      "file": "Elements/ComfyUI_00112_.png",
+      "width": 1380,
+      "height": 1380,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#b38a7e"
+    },
+    {
+      "file": "Elements/ComfyUI_00113_.png",
+      "width": 2560,
+      "height": 2560,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.45,
+      "averageColour": "#817a72"
+    },
+    {
+      "file": "Elements/ComfyUI_00114_.png",
+      "width": 2944,
+      "height": 5232,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.68,
+      "averageColour": "#51433f"
+    },
+    {
+      "file": "Elements/ComfyUI_00115_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.51,
+      "averageColour": "#575757"
+    },
+    {
+      "file": "Elements/ComfyUI_00116_.png",
+      "width": 2400,
+      "height": 2400,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.82,
+      "averageColour": "#3c3c3c"
+    },
+    {
+      "file": "Elements/ComfyUI_00117_.png",
+      "width": 2400,
+      "height": 2400,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.87,
+      "averageColour": "#2d2d2d"
+    },
+    {
+      "file": "Elements/ComfyUI_00118_.png",
+      "width": 2700,
+      "height": 4800,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.79,
+      "averageColour": "#333233"
+    },
+    {
+      "file": "Elements/ComfyUI_00119_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.77,
+      "averageColour": "#141314"
+    },
+    {
+      "file": "Elements/ComfyUI_00120_.png",
+      "width": 2940,
+      "height": 2696,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.61,
+      "averageColour": "#3a3a3a"
+    },
+    {
+      "file": "Elements/ComfyUI_00121_.png",
+      "width": 2756,
+      "height": 2812,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.55,
+      "averageColour": "#755e63"
+    },
+    {
+      "file": "Elements/ComfyUI_00122_.png",
+      "width": 2700,
+      "height": 4800,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.48,
+      "averageColour": "#776058"
+    },
+    {
+      "file": "Elements/ComfyUI_00123_.png",
+      "width": 2944,
+      "height": 3680,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.77,
+      "averageColour": "#3d3d3e"
+    },
+    {
+      "file": "Elements/ComfyUI_00124_.png",
+      "width": 1296,
+      "height": 1352,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.36,
+      "averageColour": "#663832"
+    },
+    {
+      "file": "Elements/ComfyUI_00125_.png",
+      "width": 2944,
+      "height": 2760,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.86,
+      "averageColour": "#1d0d0c"
+    },
+    {
+      "file": "Elements/ComfyUI_00126_.png",
+      "width": 2344,
+      "height": 4000,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.85,
+      "averageColour": "#1a1a19"
+    },
+    {
+      "file": "Elements/ComfyUI_00127_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.79,
+      "averageColour": "#101010"
+    },
+    {
+      "file": "Elements/ComfyUI_00128_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.87,
+      "averageColour": "#232424"
+    },
+    {
+      "file": "Elements/ComfyUI_00129_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.63,
+      "averageColour": "#6b6759"
+    },
+    {
+      "file": "Elements/ComfyUI_00130_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.89,
+      "averageColour": "#222222"
+    }
+  ],
+  "Enrico Pucci": [
+    {
+      "file": "Enrico Pucci/ComfyUI_00060_.png",
+      "width": 2944,
+      "height": 3684,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.22,
+      "averageColour": "#514545"
+    },
+    {
+      "file": "Enrico Pucci/ComfyUI_00061_.png",
+      "width": 2940,
+      "height": 3068,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.4,
+      "averageColour": "#4c4240"
+    },
+    {
+      "file": "Enrico Pucci/ComfyUI_00062_.png",
+      "width": 2872,
+      "height": 3808,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.36,
+      "averageColour": "#43424c"
+    },
+    {
+      "file": "Enrico Pucci/ComfyUI_00063_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.36,
+      "averageColour": "#332f30"
+    },
+    {
+      "file": "Enrico Pucci/ComfyUI_00064_.png",
+      "width": 2448,
+      "height": 4800,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.11,
+      "averageColour": "#50444b"
+    }
+  ],
+  "JojoStyledScrapBookRefrences": [
+    {
+      "file": "JojoStyledScrapBookRefrences/#johnnyjoestar #jjba #steelballrun #jojosbizarreadventure.jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#999696"
+    },
+    {
+      "file": "JojoStyledScrapBookRefrences/#johnnyjoestar #steelballrun #jjba.jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#aaa5a3"
+    },
+    {
+      "file": "JojoStyledScrapBookRefrences/download (40).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#6b6e7f"
+    },
+    {
+      "file": "JojoStyledScrapBookRefrences/download (41).jpg",
+      "width": 640,
+      "height": 1136,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#94b8c6"
+    },
+    {
+      "file": "JojoStyledScrapBookRefrences/é_.jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#a0b7c8"
+    },
+    {
+      "file": "JojoStyledScrapBookRefrences/Johnny Joestar wallpaper.jpg",
+      "width": 736,
+      "height": 1472,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#79898e"
+    },
+    {
+      "file": "JojoStyledScrapBookRefrences/Jotaro Kujo (JJBA) Wallpaper Collage.jpg",
+      "width": 675,
+      "height": 1200,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#5a5958"
+    }
+  ],
+  "Okuyasu": [
+    {
+      "file": "Okuyasu/ComfyUI_00050_.png",
+      "width": 2944,
+      "height": 2452,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.56,
+      "averageColour": "#433e3f"
+    },
+    {
+      "file": "Okuyasu/ComfyUI_00051_.png",
+      "width": 2400,
+      "height": 3080,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.4,
+      "averageColour": "#3c3c3f"
+    },
+    {
+      "file": "Okuyasu/ComfyUI_00052_.png",
+      "width": 1600,
+      "height": 1600,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.01,
+      "averageColour": "#675b59"
+    },
+    {
+      "file": "Okuyasu/ComfyUI_00053_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.06,
+      "averageColour": "#717c68"
+    },
+    {
+      "file": "Okuyasu/ComfyUI_00054_.png",
+      "width": 2800,
+      "height": 2800,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.01,
+      "averageColour": "#5c5f82"
+    }
+  ],
+  "Polnareff": [
+    {
+      "file": "Polnareff/ComfyUI_00040_.png",
+      "width": 2880,
+      "height": 3200,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.62,
+      "averageColour": "#302f2f"
+    },
+    {
+      "file": "Polnareff/ComfyUI_00041_.png",
+      "width": 2664,
+      "height": 2456,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.5,
+      "averageColour": "#3f3b38"
+    },
+    {
+      "file": "Polnareff/ComfyUI_00042_.png",
+      "width": 2944,
+      "height": 4128,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.23,
+      "averageColour": "#86786a"
+    },
+    {
+      "file": "Polnareff/ComfyUI_00043_.png",
+      "width": 2076,
+      "height": 3144,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#908585"
+    },
+    {
+      "file": "Polnareff/ComfyUI_00044_.png",
+      "width": 2944,
+      "height": 4160,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.51,
+      "averageColour": "#59504a"
+    }
+  ],
+  "RefrenceScrapBooks": [
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154802.png",
+      "width": 462,
+      "height": 824,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#dad1d0"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154806.png",
+      "width": 400,
+      "height": 823,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#baaba0"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154810.png",
+      "width": 466,
+      "height": 825,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#dbd0c5"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154815.png",
+      "width": 583,
+      "height": 823,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#6f706a"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154905.png",
+      "width": 874,
+      "height": 871,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#d6cdc8"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154908.png",
+      "width": 895,
+      "height": 877,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#e1d3ce"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154912.png",
+      "width": 894,
+      "height": 840,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#d2c5bc"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154915.png",
+      "width": 889,
+      "height": 843,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#dfd4cd"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154943.png",
+      "width": 873,
+      "height": 779,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#b0a7a0"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154946.png",
+      "width": 655,
+      "height": 863,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#ab9886"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 154950.png",
+      "width": 863,
+      "height": 663,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#ae9b8d"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155120.png",
+      "width": 427,
+      "height": 768,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#968577"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155125.png",
+      "width": 435,
+      "height": 764,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#6a6867"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155133.png",
+      "width": 428,
+      "height": 764,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#b4c3d1"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155140.png",
+      "width": 425,
+      "height": 779,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#a8adb6"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155151.png",
+      "width": 435,
+      "height": 771,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#b7bcc4"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155158.png",
+      "width": 431,
+      "height": 771,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#7e859a"
+    },
+    {
+      "file": "RefrenceScrapBooks/Screenshot 2026-11-20 155209.png",
+      "width": 435,
+      "height": 774,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#cfdce2"
+    }
+  ],
+  "ScrapBookRefrences": [
+    {
+      "file": "ScrapBookRefrences/download (34).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#e7c9c0"
+    },
+    {
+      "file": "ScrapBookRefrences/download (35).jpg",
+      "width": 345,
+      "height": 345,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#acb4c4"
+    },
+    {
+      "file": "ScrapBookRefrences/download (36).jpg",
+      "width": 675,
+      "height": 1200,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#ced4de"
+    },
+    {
+      "file": "ScrapBookRefrences/download (37).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#adb7c5"
+    },
+    {
+      "file": "ScrapBookRefrences/download (38).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#b5bdc5"
+    },
+    {
+      "file": "ScrapBookRefrences/download (39).jpg",
+      "width": 736,
+      "height": 1308,
+      "format": "jpeg",
+      "hasAlpha": false,
+      "transparentShare": null,
+      "averageColour": "#a8977c"
+    }
+  ],
+  "SpeedWagon": [
+    {
+      "file": "SpeedWagon/ComfyUI_00016_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.32,
+      "averageColour": "#48433e"
+    },
+    {
+      "file": "SpeedWagon/ComfyUI_00018_.png",
+      "width": 2944,
+      "height": 4164,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.56,
+      "averageColour": "#29262d"
+    },
+    {
+      "file": "SpeedWagon/ComfyUI_00020_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.38,
+      "averageColour": "#3d322b"
+    },
+    {
+      "file": "SpeedWagon/ComfyUI_00022_.png",
+      "width": 2944,
+      "height": 2944,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.3,
+      "averageColour": "#332c27"
+    },
+    {
+      "file": "SpeedWagon/ComfyUI_00024_.png",
+      "width": 2880,
+      "height": 5120,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.75,
+      "averageColour": "#1c1a1e"
+    }
+  ],
+  "Wamuu": [
+    {
+      "file": "Wamuu/ComfyUI_00030_.png",
+      "width": 2880,
+      "height": 2824,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.3,
+      "averageColour": "#796f54"
+    },
+    {
+      "file": "Wamuu/ComfyUI_00031_.png",
+      "width": 2400,
+      "height": 2400,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.03,
+      "averageColour": "#b99c5e"
+    },
+    {
+      "file": "Wamuu/ComfyUI_00032_.png",
+      "width": 2760,
+      "height": 2764,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0,
+      "averageColour": "#8e7f67"
+    },
+    {
+      "file": "Wamuu/ComfyUI_00033_.png",
+      "width": 2320,
+      "height": 2324,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.13,
+      "averageColour": "#685949"
+    },
+    {
+      "file": "Wamuu/ComfyUI_00034_.png",
+      "width": 2940,
+      "height": 2228,
+      "format": "png",
+      "hasAlpha": true,
+      "transparentShare": 0.22,
+      "averageColour": "#616863"
+    }
+  ]
+}
