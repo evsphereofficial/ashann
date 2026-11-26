@@ -97,12 +97,12 @@ const PAGE_THEMES: Record<string, PageTheme> = {
 type StageTransition = 'slide-left' | 'bloom' | 'drop-top' | 'slide-right' | 'unfold' | 'tilt-pop';
 
 const STAGE_FROM: Record<StageTransition, gsap.TweenVars> = {
-  'slide-left': { x: -48, y: 18, rotate: -3, opacity: 0 },
-  bloom: { scale: 0.92, y: 24, opacity: 0 },
-  'drop-top': { y: -40, rotate: 2.5, opacity: 0 },
-  'slide-right': { x: 48, y: 18, rotate: 3, opacity: 0 },
-  unfold: { y: 42, rotateX: 16, scale: 0.95, opacity: 0 },
-  'tilt-pop': { y: 36, rotate: -5, scale: 0.9, opacity: 0 },
+  'slide-left': { x: -36, y: 14, rotate: -2, opacity: 0.4 },
+  bloom: { scale: 0.94, y: 18, opacity: 0.4 },
+  'drop-top': { y: -28, rotate: 2, opacity: 0.4 },
+  'slide-right': { x: 36, y: 14, rotate: 2, opacity: 0.4 },
+  unfold: { y: 28, rotateX: 14, scale: 0.96, opacity: 0.4 },
+  'tilt-pop': { y: 26, rotate: -3.5, scale: 0.93, opacity: 0.4 },
 };
 
 function KeepsakeSpread({

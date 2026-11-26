@@ -106,6 +106,10 @@ export function ScrapbookLoader({ onReady }: { onReady: () => void }) {
 
     const run = async () => {
       const chunksPromise = preloadSceneChunks().finally(tick);
+      const fontsPromise =
+        typeof document !== 'undefined' && 'fonts' in document
+          ? document.fonts.ready.catch(() => {})
+          : Promise.resolve();
 
       // Parallel worker pool (concurrency 8) for fast, non-blocking image caching
       const CONCURRENCY = 8;
@@ -119,7 +123,7 @@ export function ScrapbookLoader({ onReady }: { onReady: () => void }) {
         }
       });
 
-      await Promise.all([chunksPromise, ...workers]);
+      await Promise.all([chunksPromise, fontsPromise, ...workers]);
       finish();
     };
 

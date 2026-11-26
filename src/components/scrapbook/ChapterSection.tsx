@@ -117,15 +117,9 @@ export function ChapterSection({
 /**
  * Reveal a chapter's elements and texts individually as they scroll into view.
  *
- * Supports directional and writing reveals via `data-reveal`:
- *  - `up` (default): rises and settles
- *  - `left` / `right`: slides in from the side with a paper tilt
- *  - `pop`: springy sticker/stamp pop
- *  - `write`: ink-wipe reveal from left to right (for handwritten & serif lines)
- *  - `unfold`: 3D paper unfold
- *
- * Each element gets its own ScrollTrigger (`start: 'top 88%'`) so tall
- * chapters animate continuously as you scroll down them.
+ * Uses a single lightweight IntersectionObserver instead of dozens of
+ * ScrollTriggers, and never pre-hides elements at `opacity: 0` on mount so
+ * nothing can ever get stuck invisible during fast scrolling.
  */
 export function useChapterReveal(scopeRef: React.RefObject<HTMLElement | null>) {
   useEffect(() => {
@@ -134,96 +128,83 @@ export function useChapterReveal(scopeRef: React.RefObject<HTMLElement | null>) 
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const items = Array.from(node.querySelectorAll<HTMLElement>('[data-reveal]'));
-    const decos = Array.from(node.querySelectorAll<HTMLElement>('[data-parallax]'));
-    if (items.length === 0 && decos.length === 0) return;
+    if (items.length === 0) return;
 
-    const ctx = gsap.context(() => {
-      items.forEach((item, index) => {
-        const mode = item.dataset.reveal || 'up';
-        const delay = Number.parseFloat(item.dataset.revealDelay ?? '0') || 0;
+    const animated = new WeakSet<HTMLElement>();
 
-        let fromVars: gsap.TweenVars = { y: 40, opacity: 0, rotate: index % 2 === 0 ? -2 : 2 };
-        let toVars: gsap.TweenVars = {
-          y: 0,
-          x: 0,
-          scale: 1,
-          rotate: 0,
-          rotateX: 0,
-          opacity: 1,
-          duration: 0.72,
-          delay,
-          ease: 'power3.out',
-          clearProps: 'opacity,transform,clipPath',
-        };
+    const animateItem = (item: HTMLElement, index: number) => {
+      if (animated.has(item)) return;
+      animated.add(item);
 
-        if (mode === 'left') {
-          fromVars = { x: -42, y: 12, opacity: 0, rotate: -3 };
-        } else if (mode === 'right') {
-          fromVars = { x: 42, y: 12, opacity: 0, rotate: 3 };
-        } else if (mode === 'pop') {
-          fromVars = { scale: 0.72, opacity: 0, rotate: -8 };
-          toVars = { ...toVars, duration: 0.6, ease: 'back.out(1.7)' };
-        } else if (mode === 'write') {
-          fromVars = { clipPath: 'inset(0 100% 0 0)', opacity: 0.25, x: -8 };
-          toVars = {
-            ...toVars,
-            clipPath: 'inset(0 0% 0 0)',
-            opacity: 1,
-            x: 0,
-            duration: 0.85,
-            ease: 'power2.out',
-          };
-        } else if (mode === 'unfold') {
-          fromVars = { y: 30, rotateX: 20, scale: 0.96, opacity: 0 };
-          toVars = { ...toVars, duration: 0.78 };
-        }
+      const mode = item.dataset.reveal || 'up';
+      const delay = Number.parseFloat(item.dataset.revealDelay ?? '0') || 0;
 
-        gsap.fromTo(item, fromVars, {
+      let fromVars: gsap.TweenVars = { y: 28, opacity: 0.35, rotate: index % 2 === 0 ? -1.5 : 1.5 };
+      let toVars: gsap.TweenVars = {
+        y: 0,
+        x: 0,
+        scale: 1,
+        rotate: 0,
+        rotateX: 0,
+        opacity: 1,
+        duration: 0.58,
+        delay,
+        ease: 'power3.out',
+        clearProps: 'opacity,transform,clipPath',
+      };
+
+      if (mode === 'left') {
+        fromVars = { x: -32, y: 8, opacity: 0.35, rotate: -2 };
+      } else if (mode === 'right') {
+        fromVars = { x: 32, y: 8, opacity: 0.35, rotate: 2 };
+      } else if (mode === 'pop') {
+        fromVars = { scale: 0.82, opacity: 0.35, rotate: -5 };
+        toVars = { ...toVars, duration: 0.5, ease: 'back.out(1.6)' };
+      } else if (mode === 'write') {
+        fromVars = { clipPath: 'inset(0 100% 0 0)', opacity: 0.5, x: -6 };
+        toVars = {
           ...toVars,
-          scrollTrigger: {
-            trigger: item,
-            start: 'top 89%',
-            once: true,
-          },
-        });
-      });
-
-      decos.forEach((deco) => {
-        gsap.from(deco, {
-          scale: 0.86,
-          opacity: 0,
-          duration: 0.75,
+          clipPath: 'inset(0 0% 0 0)',
+          opacity: 1,
+          x: 0,
+          duration: 0.72,
           ease: 'power2.out',
-          clearProps: 'scale,opacity',
-          scrollTrigger: {
-            trigger: deco,
-            start: 'top 95%',
-            once: true,
-          },
-        });
-      });
-    }, node);
+        };
+      } else if (mode === 'unfold') {
+        fromVars = { y: 24, rotateX: 16, scale: 0.97, opacity: 0.35 };
+      }
 
-    return () => ctx.revert();
+      gsap.fromTo(item, fromVars, toVars);
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry, i) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          observer.unobserve(el);
+          animateItem(el, i);
+        });
+      },
+      { rootMargin: '0px 0px -6% 0px', threshold: 0.01 },
+    );
+
+    for (const item of items) {
+      observer.observe(item);
+    }
+
+    return () => observer.disconnect();
   }, [scopeRef]);
 }
 
 /**
- * Parallax for decorative layers.
- *
- * Scope every `[data-parallax]` descendant to this container and drift it on
- * scroll. Speed comes from the attribute (`0.1` = subtle, `0.4` = dramatic).
- *
- * Ownership rule: parallax targets must be *wrapper* layers. Anything a
- * Framer Motion component animates itself (hover, drag, flip) must never carry
- * `data-parallax`, or two systems would write the same transform.
+ * Parallax for decorative layers (desktop `lg`+ only so phones stay 60fps).
  */
 export function useParallax(scopeRef: React.RefObject<HTMLElement | null>, enabled: boolean) {
   useEffect(() => {
     const node = scopeRef.current;
     if (!node || !enabled) return;
-    // Skip decorative scroll-scrubbed parallax on small phone screens to keep scrolling 60fps.
-    if (window.matchMedia('(max-width: 639px)').matches) return;
+    if (window.matchMedia('(max-width: 1023px)').matches) return;
 
     const ctx = gsap.context(() => {
       const layers = gsap.utils.toArray<HTMLElement>('[data-parallax]');

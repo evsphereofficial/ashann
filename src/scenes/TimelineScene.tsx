@@ -50,15 +50,16 @@ export default function TimelineScene() {
     const ctx = gsap.context(() => {
       cards.forEach((card, i) => {
         gsap.from(card, {
-          y: 36,
-          x: i % 2 === 0 ? -24 : 24,
-          opacity: 0,
-          rotate: i % 2 === 0 ? -4 : 4,
-          duration: 0.7,
+          y: 28,
+          x: i % 2 === 0 ? -18 : 18,
+          opacity: 0.4,
+          rotate: i % 2 === 0 ? -3 : 3,
+          duration: 0.65,
           ease: 'power3.out',
+          clearProps: 'opacity,transform',
           scrollTrigger: {
             trigger: card,
-            start: 'top 86%',
+            start: 'top 90%',
             once: true,
           },
         });

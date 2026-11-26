@@ -156,17 +156,17 @@ export default function OpeningScene() {
     const ctx = gsap.context(() => {
       items.forEach((item, index) => {
         gsap.from(item, {
-          y: 52,
-          x: index % 2 === 0 ? -24 : 24,
-          opacity: 0,
-          rotate: index % 2 === 0 ? -5 : 5,
-          scale: 0.94,
-          duration: 0.75,
+          y: 36,
+          x: index % 2 === 0 ? -18 : 18,
+          opacity: 0.4,
+          rotate: index % 2 === 0 ? -3.5 : 3.5,
+          scale: 0.96,
+          duration: 0.65,
           ease: 'power3.out',
           clearProps: 'opacity,transform',
           scrollTrigger: {
             trigger: item,
-            start: 'top 90%',
+            start: 'top 92%',
             once: true,
           },
         });

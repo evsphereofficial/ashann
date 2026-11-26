@@ -43,7 +43,6 @@ export function Polaroid({
   showFlipControl = false,
   flipped = false,
   onFlip,
-  priority = false,
 }: PolaroidProps) {
   const interactive = Boolean(onClick);
   const Tag = interactive ? "button" : "div";
@@ -75,7 +74,7 @@ export function Polaroid({
               src={src}
               alt={alt}
               fill
-              priority={priority}
+              priority
               sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 22vw"
               className={cn("object-cover", imageClassName)}
             />
