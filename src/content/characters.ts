@@ -123,7 +123,7 @@ const QUOTES: Record<string, string> = {
   polnareff: "FRENCH MAN DETECTED",
   okuyasu: "YEAH I DONT KNOW",
   doppio: "Dude why's the banana ringing",
-  pucci: "Do you love me? \"Do you believe in gravity\" No FROM UH PART 6",
+  pucci: "Do you love me? \"Do you believe in gravity\"",
 };
 
 export const characters: CharacterAsset[] = META.map((meta) => {

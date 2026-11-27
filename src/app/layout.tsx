@@ -33,10 +33,8 @@ const anton = Anton({
 });
 
 export const metadata: Metadata = {
-  title: "Six Months, One Little Universe — an anniversary scrapbook",
-  description:
-    "A cinematic, interactive scrapbook made for a six-month anniversary: photographs, letters, paper keepsakes and a JoJo-inspired fan magazine that assemble themselves as you explore.",
-  // No index, no follow: this is a private gift, not a public page.
+  title: "Open me ♡",
+  // No index, no follow, no spoiler description for link previews.
   robots: { index: false, follow: false },
 };
 
