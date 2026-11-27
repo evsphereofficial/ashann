@@ -79,7 +79,7 @@ export default function LetterScene() {
   };
 
   return (
-    <div ref={scopeRef} className="scene-stage relative px-4 pb-24 pt-16 sm:px-6 sm:pb-24">
+    <div ref={scopeRef} className="scene-stage relative px-4 pb-32 pt-16 sm:px-6 sm:pb-28">
       {/* ── Ground: stationery, stamps, dried flowers, garland ─────────── */}
       <ArtImg
         src={background(PAPER.scriptOnBlack)}

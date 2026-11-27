@@ -280,10 +280,10 @@ export default function CoverScene() {
 
               <div className="relative z-10 flex h-full flex-col justify-center gap-4">
                 <p data-invite className="type-label text-[11px] text-[var(--color-valentine)]">
-                  FOR THE TWO OF US
+                  {anniversary.coverInviteEyebrow}
                 </p>
                 <h2 data-invite className="type-serif text-[clamp(1.6rem,4vw,2.6rem)] leading-[1.05]">
-                  {anniversary.conceptTitle}
+                  {anniversary.coverInviteTitle}
                 </h2>
                 <p data-invite className="type-hand text-[clamp(1.15rem,2.4vw,1.5rem)] leading-snug text-[var(--color-steel)]">
                   {anniversary.openingNote}
@@ -291,7 +291,7 @@ export default function CoverScene() {
                 <div data-invite className="space-y-1.5">
                   <FilledOrPlaceholder
                     as="p"
-                    value={anniversary.subtitle}
+                    value={anniversary.coverInviteSubtitle}
                     className="text-sm leading-relaxed text-[var(--color-ink-soft)]"
                   />
                   <FilledOrPlaceholder

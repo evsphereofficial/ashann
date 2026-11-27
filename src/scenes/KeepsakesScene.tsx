@@ -6,7 +6,7 @@ import { gsap } from '@/lib/gsap';
 import { useDragProgress } from '@/hooks/useDragProgress';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
 import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
-import { keepsakes } from '@/content/keepsakes';
+import { FILM_FRAME_LINES, keepsakes } from '@/content/keepsakes';
 import { memories } from '@/content/memories';
 import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { PaperLayer } from '@/components/scrapbook/PaperLayer';
@@ -649,10 +649,9 @@ function BotanicalPocketPage() {
 }
 
 /* ── Page 05 · Still frames ─────────────────────────────────────────────── */
-const FILM_FRAMES = 4;
+const FILM_FRAMES = FILM_FRAME_LINES.length;
 
 function FilmReelPage() {
-  const keepsake = findKeepsake('filmstrip');
   const [frameIdx, setFrameIdx] = useState(0);
 
   return (
@@ -706,7 +705,7 @@ function FilmReelPage() {
           </p>
           <FilledOrPlaceholder
             as="p"
-            value={keepsake.reveal}
+            value={FILM_FRAME_LINES[frameIdx]}
             className="type-hand mt-2 text-xl leading-snug sm:text-2xl"
           />
         </div>
@@ -841,10 +840,10 @@ export default function KeepsakesScene() {
         <WashiTape variant="butter" className="mb-3" rotate={4} width="96px" />
         <p data-reveal="write" className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 05 · KEEPSAKES</p>
         <h2 id="keepsakes-title" data-reveal="left" className="type-masthead mt-2 max-w-3xl text-[clamp(2.1rem,6.5vw,4.2rem)] leading-[0.92]">
-          Little things we kept
+          Little things *I* kept
         </h2>
         <p data-reveal="write" data-reveal-delay="0.1" className="mt-3 max-w-xl text-[var(--color-ink-soft)]">
-          Six quiet pages tucked inside — pull, part, unwrap, slide, and peel as you go.
+          Follow the instructions, there&apos;s HOPEFULLY things inside
         </p>
       </header>
 

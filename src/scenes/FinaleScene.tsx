@@ -116,7 +116,7 @@ export default function FinaleScene() {
 
               <p data-reveal="write" className="type-label text-[11px] text-[var(--color-valentine)]">CHAPTER 07 · FINALE</p>
               <h2 id="finale-title" data-reveal="right" className="type-masthead mt-2 text-[clamp(1.9rem,5.5vw,3.4rem)] leading-[0.95]">
-                That is the whole book
+                {anniversary.finaleTitle}
               </h2>
 
               <div data-reveal="write" data-reveal-delay="0.12" className="mt-5 border-l-2 border-dashed border-[#c9b79c] pl-4">

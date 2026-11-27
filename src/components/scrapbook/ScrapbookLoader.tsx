@@ -166,10 +166,10 @@ export function ScrapbookLoader({ onReady }: { onReady: () => void }) {
             />
 
             <p className="type-label text-[10px] tracking-[0.22em] text-[var(--color-valentine)]">
-              SIX MONTHS, ONE LITTLE UNIVERSE
+              SIX MONTHS, LIFETIME WORTH OF MEMORIES
             </p>
             <h2 className="type-hand mt-2 text-3xl text-[var(--color-ink)]">
-              Gathering the pages…
+              Loading your memories…
             </h2>
 
             {/* Stitched progress ribbon */}

@@ -7,14 +7,14 @@ export const keepsakes: Keepsake[] = [
     title: "The ribbon drawer",
     hint: "Pull the ribbon tab to slide the drawer open",
     affordance: "Pull",
-    reveal: "\"I'll find you in every lifetime♡\" (P.S. Thats a threat)",
+    reveal: "Everything comes at a cost. In exchange for your AMAZING wife — this one stays EMPTY",
   },
   {
     id: "sleeve",
     title: "Pressed between pages",
     hint: "Slide the card out of its pocket",
     affordance: "Slide",
-    reveal: "You're the closest I've ever gotten to someone. Please baby, take care of yourself.",
+    reveal: "Its like you're the only person I know. Take care of yourself and dont ever stop being the amazing boyfriend you always end up being",
   },
   {
     id: "polaroid",
@@ -28,23 +28,30 @@ export const keepsakes: Keepsake[] = [
     title: "Still frames",
     hint: "Step through the negatives on the lightbox",
     affordance: "Next frame",
-    reveal: "Every stupid inside joke, every late-night reel, and every single day with you.",
+    reveal: "I could've never imagined in a million years that",
   },
   {
     id: "giftbox",
     title: "Unwrap this",
     hint: "Untie the bow and lift the lid",
     affordance: "Open",
-    reveal: "My Kirk for National Kirks Day ♡",
+    reveal: "Pretend this is a makeshift $10 wendy's giftcard",
   },
   {
     id: "hidden",
     title: "Above the clouds",
     hint: "Part the clouds to see what is waiting underneath",
     affordance: "Part",
-    reveal: "EVERY single day has been nothing but pure bliss (ﾉ_・、)",
+    reveal: "Nothing in this entire universe could possibly ever express my love for you man. Happy anniversary",
   },
 ];
+
+export const FILM_FRAME_LINES = [
+  "I could've never imagined in a million years that",
+  "someone like me could experience something like this",
+  "..with someone as amazing as you.",
+  "I love you man",
+] as const;
 
 /** Chapter 06 — the letter, built from the client's own words. */
 export const letter: LetterContent = {

@@ -42,6 +42,6 @@ export const timeline: TimelineEntry[] = [
     month: 6,
     date: "Month 6 👀👀",
     title: "EVERY single day has been nothing but pure bliss (ﾉ_・、)",
-    note: "I'll find you in every lifetime♡ (P.S. Thats a threat)",
+    note: "You have no idea how happy I've been ever since",
   },
 ];

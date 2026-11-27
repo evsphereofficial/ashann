@@ -119,11 +119,11 @@ const META: Array<{ id: string; name: string; part: string; scale: number; rotat
 
 const QUOTES: Record<string, string> = {
   speedwagon: "Even Speedwagon is impressed by these six months.",
-  wamuu: "An honourable warrior in icy blue.",
-  polnareff: "Dramatic, loyal, and always showing up.",
-  okuyasu: "Pure heart, zero hesitation.",
-  doppio: "Sweet, chaotic, and always on the line.",
-  pucci: "Counting every prime moment to heaven.",
+  wamuu: "Is the wind really changing?😟",
+  polnareff: "FRENCH MAN DETECTED",
+  okuyasu: "YEAH I DONT KNOW",
+  doppio: "Dude why's the banana ringing",
+  pucci: "Do you love me? \"Do you believe in gravity\" No FROM UH PART 6",
 };
 
 export const characters: CharacterAsset[] = META.map((meta) => {

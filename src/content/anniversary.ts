@@ -4,6 +4,9 @@ import type { SceneMeta } from "./types";
 export const anniversary = {
   conceptTitle: "Six Months, One Little Universe",
   eyebrow: "A scrapbook for",
+  coverInviteEyebrow: "FOR MY BELOVEDD",
+  coverInviteTitle: "The happiest six months of my LIFE",
+  coverInviteSubtitle: "Small token for everything you could POSSIBLY mean to me",
   recipientName: "My favourite idiot ♡",
   senderName: "Ash",
   dateLine: "22nd June · Six Months Together",
@@ -11,7 +14,9 @@ export const anniversary = {
   coverHint: "Everything on these pages can be touched.",
   openingNote:
     "Objects here move on their own — and they answer when you tap them.",
-  finaleMessage: "EVERY single day has been nothing but pure bliss (ﾉ_・、)",
+  finaleTitle: "THE GRAND FINALĚE👀👀👀👀",
+  finaleMessage:
+    "*annoyed atheist priest voice* \"I shall now pronounce you.. Hi and iH. You may now kiss the iH\" YAEY(≧□≦)",
   hasAudio: false,
 } as const;
 

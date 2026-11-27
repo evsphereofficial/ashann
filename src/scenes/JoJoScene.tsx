@@ -393,8 +393,7 @@ export default function JoJoScene() {
           They keep turning up
         </h2>
         <p data-reveal="write" data-reveal-delay="0.1" className="mt-3 max-w-xl text-[var(--color-ink-soft)]">
-          Six recurring faces, cut out and taped in — one full-page spread each, printed in that
-          character&apos;s own colours.
+          (THIS PLACE IS UNDER CONSTRUCTION. AUTHORISED PERSONNEL ONLY. NO HUSBUNS ALLOWED)
         </p>
       </header>
 
