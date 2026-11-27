@@ -6,7 +6,7 @@ import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSec
 import { blueSubspreadIds, characters } from '@/content/characters';
 import type { CharacterAsset } from '@/content/types';
 import { characterPalette, paletteVars, CHARACTER_ORDER } from '@/content/palettes';
-import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
+import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
 import { HandwrittenNote } from '@/components/scrapbook/HandwrittenNote';
 import { ArtImg } from '@/components/scrapbook/ArtImg';
@@ -213,17 +213,19 @@ function CharacterSpread({
             ))}
           </div>
 
-          {/* The quote slot: empty on purpose, and marked as such. */}
-          <blockquote className="mt-5 max-w-md border-l-4 pl-4" style={{ borderColor: palette.accent }}>
-            <FilledOrPlaceholder
-              as="p"
-              value={character.quote ?? '[PLACEHOLDER: add a quote]'}
-              className="type-serif text-[clamp(1rem,2vw,1.2rem)] italic"
-            />
-            <footer className="type-label mt-1 text-[10px]" style={{ color: palette.ink, opacity: 0.7 }}>
-              {character.name} · {character.part}
-            </footer>
-          </blockquote>
+          {/* The quote slot */}
+          {character.quote ? (
+            <blockquote className="mt-5 max-w-md border-l-4 pl-4" style={{ borderColor: palette.accent }}>
+              <FilledOrPlaceholder
+                as="p"
+                value={character.quote}
+                className="type-serif text-[clamp(1rem,2vw,1.2rem)] italic"
+              />
+              <footer className="type-label mt-1 text-[10px]" style={{ color: palette.ink, opacity: 0.7 }}>
+                {character.name} · {character.part}
+              </footer>
+            </blockquote>
+          ) : null}
 
           <div className="mt-6 flex flex-wrap items-center gap-3">
             <button
@@ -439,9 +441,6 @@ export default function JoJoScene() {
               </li>
             ))}
           </ul>
-          <p className="relative z-10 mt-4">
-            <PlaceholderTag value="[PLACEHOLDER: confirm which characters are drawn in blue]" />
-          </p>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
 import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { memories } from '@/content/memories';
 import type { Memory } from '@/content/types';
-import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
+import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { Polaroid } from '@/components/scrapbook/Polaroid';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
 import { ArtImg } from '@/components/scrapbook/ArtImg';
@@ -98,7 +98,7 @@ export default function MemoriesScene() {
         src={element(ART.driedRoses)}
         decorative
         data-parallax="0.44"
-        className="pointer-events-none absolute bottom-6 right-12 hidden w-36 opacity-95 lift-soft lg:block"
+        className="pointer-events-none absolute bottom-6 right-4 w-24 opacity-90 lift-soft sm:right-12 sm:w-36"
       />
 
       <div className="relative mx-auto w-full max-w-6xl">
@@ -110,9 +110,6 @@ export default function MemoriesScene() {
           </h2>
           <p data-reveal="write" data-reveal-delay="0.1" className="mt-3 text-[var(--color-ink-soft)]">
             Open any print to read the caption and the note on the back.
-          </p>
-          <p data-reveal="pop" className="mt-3">
-            <PlaceholderTag value="[PLACEHOLDER: add your own photographs over these supplied paper scans]" />
           </p>
         </header>
 

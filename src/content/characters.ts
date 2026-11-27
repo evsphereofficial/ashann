@@ -117,6 +117,15 @@ const META: Array<{ id: string; name: string; part: string; scale: number; rotat
   { id: "pucci", name: "Enrico Pucci", part: "Part 6", scale: 1.02, rotation: 3, role: "panel" },
 ];
 
+const QUOTES: Record<string, string> = {
+  speedwagon: "Even Speedwagon is impressed by these six months.",
+  wamuu: "An honourable warrior in icy blue.",
+  polnareff: "Dramatic, loyal, and always showing up.",
+  okuyasu: "Pure heart, zero hesitation.",
+  doppio: "Sweet, chaotic, and always on the line.",
+  pucci: "Counting every prime moment to heaven.",
+};
+
 export const characters: CharacterAsset[] = META.map((meta) => {
   const gallery = galleryFor(meta.id);
   const heroIndex = HERO_INDEX[meta.id] ?? 0;
@@ -132,7 +141,7 @@ export const characters: CharacterAsset[] = META.map((meta) => {
       : `Artwork for ${meta.name}.`,
     role: meta.role,
     accent: ACCENT[meta.id] ?? "#8b4a3a",
-    quote: null,
+    quote: QUOTES[meta.id] ?? null,
     scale: meta.scale,
     rotation: meta.rotation,
     gallery,

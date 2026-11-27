@@ -1,19 +1,17 @@
-import { ph, type SceneMeta } from "./types";
+import type { SceneMeta } from "./types";
 
-/** Cover + global copy. Every personal value is an explicit placeholder. */
+/** Cover + global copy — populated from the client's screenshots & chats. */
 export const anniversary = {
   conceptTitle: "Six Months, One Little Universe",
   eyebrow: "A scrapbook for",
-  /** Both names are unset — never invent them. */
-  recipientName: ph("boyfriend's first name"),
-  senderName: ph("your first name"),
-  dateLine: ph("anniversary date, e.g. 14 February 2026"),
-  subtitle: ph("one sentence about what six months has felt like"),
+  recipientName: "My favourite idiot ♡",
+  senderName: "Ash",
+  dateLine: "22nd June · Six Months Together",
+  subtitle: "\"I'll find you in every lifetime♡\" (P.S. Thats a threat)",
   coverHint: "Everything on these pages can be touched.",
   openingNote:
     "Objects here move on their own — and they answer when you tap them.",
-  finaleMessage: ph("closing line for the two of you"),
-  /** No audio ships by default; the control only exists if audio is added. */
+  finaleMessage: "EVERY single day has been nothing but pure bliss (ﾉ_・、)",
   hasAudio: false,
 } as const;
 
@@ -33,13 +31,13 @@ export const scenes: SceneMeta[] = [
   {
     id: "timeline",
     label: "Six Months",
-    blurb: "Six keepsake tokens threaded on a ribbon.",
+    blurb: "Six months pinned along the ribbon.",
     chapter: "02",
   },
   {
     id: "memories",
     label: "Photographs",
-    blurb: "Polaroids, film strips, postcards and a lightbox.",
+    blurb: "Six screenshots, six memories.",
     chapter: "03",
   },
   {
@@ -51,7 +49,7 @@ export const scenes: SceneMeta[] = [
   {
     id: "keepsakes",
     label: "Keepsakes",
-    blurb: "Drawers, sleeves, seals and one hidden sticker.",
+    blurb: "Drawers, clouds, gift box, and hidden notes.",
     chapter: "05",
   },
   {

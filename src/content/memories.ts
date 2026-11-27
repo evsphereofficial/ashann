@@ -1,83 +1,73 @@
-import { PAPER, background } from "@/lib/art";
-import { ph, type Memory } from "./types";
+import type { Memory } from "./types";
 
 /**
- * Photographs and captions.
- *
- * No personal photographs were supplied, so each print shows a real supplied
- * paper scan from `RefrenceImages/` (the same pack the rest of the scrapbook
- * is built from) instead of a generated illustration. That keeps every pixel
- * on the page part of the user's own material while leaving the *slot* honest:
- * every caption, note and title is still an explicit `[PLACEHOLDER …]`, and
- * the photographs chapter carries a visible "to fill in" banner.
- *
- * To go live, point `image` at your own file — layout, animation and the
- * lightbox never need to change.
+ * Six real chat screenshots and their exact titles, captions, dates, and notes
+ * supplied by the client.
  */
 export const memories: Memory[] = [
   {
     id: "memory-polaroid",
-    title: ph("title of the first memory"),
-    date: ph("date of the first memory"),
-    caption: ph("short caption for the polaroid"),
-    note: ph("the note written on the back of this polaroid"),
-    image: background(PAPER.grungeRed),
-    alt: "Placeholder print: a supplied red grunge collage scan standing in for the first photograph.",
+    title: "HAPPIEST I've ever been in 15 years",
+    date: "22nd JUNE 2:27 PM",
+    caption: "22nd JUNE 2:27 PM",
+    note: "HAPPIEST I've ever been in 15 years — \"Are u a father\" \"I am ❤️\"",
+    image: "/assets/memories/1.jpg",
+    alt: "Chat screenshot from 22nd June 2:27 PM: Are u a father.",
     layout: "polaroid",
     rotation: -4.5,
   },
   {
     id: "memory-filmstrip",
-    title: ph("title of the film-strip memory"),
-    date: ph("date of the film-strip memory"),
-    caption: ph("caption for the film strip frames"),
-    note: ph("what these frames were taken of"),
-    image: background(PAPER.redMangaPanels),
-    alt: "Placeholder print: a supplied red manga-panel scan standing in for the film-strip photograph.",
+    title: "The climb where you nice to me 🥶",
+    date: "22nd JUNE",
+    caption: "Stupid moid left me on delivered 🙄",
+    note: "Didn't get the reference — \"You outniched me\" \"Ofc I did\"",
+    image: "/assets/memories/2.jpg",
+    alt: "Chat screenshot: Didn't get the reference, you outniched me.",
     layout: "filmstrip",
     rotation: 3,
   },
   {
     id: "memory-postcard",
-    title: ph("title of the postcard memory"),
-    date: ph("date of the postcard memory"),
-    caption: ph("message written across the postcard"),
-    note: ph("where this postcard was sent from"),
-    image: background(PAPER.printmakingGrid),
-    alt: "Placeholder print: a supplied printmaking-grid scan standing in for the postcard photograph.",
+    title: "Litreally confessed my love, dense ass idiot 🙄",
+    date: "Krikentines day",
+    caption: "Kirky kirk 😂😂",
+    note: "\"Do you wanna be my kirk for national kirks day\" — \"The kirkversary? Krikentines day. Okay.\"",
+    image: "/assets/memories/3.jpg",
+    alt: "Chat screenshot: Do you wanna be my kirk for national kirks day.",
     layout: "postcard",
     rotation: -2,
   },
   {
     id: "memory-editorial",
-    title: ph("title of the editorial memory"),
-    date: ph("date of the editorial memory"),
-    caption: ph("editorial caption for the large photograph"),
-    note: ph("longer note beside the large photograph"),
-    image: background(PAPER.blueShatteredStars),
-    alt: "Placeholder print: a supplied blue shattered-star collage standing in for the large photograph.",
+    title: "1ST NOVEMBER 05:01 PM",
+    date: "1st November 5:01PM",
+    caption: "1ST NOVEMBER 05:01 PM",
+    note: "Frutiger aero yams to yo left 🥶",
+    image: "/assets/memories/4.jpg",
+    alt: "Chat screenshot from 1st November 5:01 PM: mosquito larvae in a bucket.",
     layout: "editorial",
     rotation: 1.8,
   },
   {
     id: "memory-ticket",
-    title: ph("title behind the ticket stub"),
-    date: ph("date of the ticket stub"),
-    caption: ph("what the ticket was for"),
-    note: ph("one line about the ticket stub"),
-    image: background(PAPER.starredNotebook),
-    alt: "Placeholder print: a supplied starred notebook scan standing in for the ticket-stub photograph.",
+    title: "8th November 10:22PM",
+    date: "8th November 10:22PM",
+    caption: "Never EVER felt safer with anyone like that",
+    note: "\"You're the closest Ive ever gotten to someone... I could go on and on about how much I love you, but it would never be enough.\"",
+    image: "/assets/memories/5.jpg",
+    alt: "Chat screenshot from 8th November 10:22 PM: You're the closest I've ever gotten to someone.",
     layout: "postcard",
     rotation: 5,
   },
   {
     id: "memory-small",
-    title: ph("title of the small photograph"),
-    date: ph("date of the small photograph"),
-    caption: ph("caption for the small photograph"),
-    note: ph("note for the small photograph"),
-    image: background(PAPER.ginghamNoteCard),
-    alt: "Placeholder print: a supplied gingham note-card scan standing in for the small photograph.",
+    title: "The next international grandmother 🥶",
+    date: "Checkmate in 2 moves",
+    caption: "MASSIVE fool ptooey 😂😂",
+    note: "\"The fastest recorded checkmate is in 2 moves\" — \"It's called the fools mate\"",
+    image: "/assets/memories/6.jpg",
+    alt: "Chat screenshot: The fastest recorded checkmate is in 2 moves, fools mate.",
     layout: "polaroid",
     rotation: -6,
   },

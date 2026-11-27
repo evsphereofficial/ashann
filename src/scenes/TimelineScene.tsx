@@ -105,13 +105,13 @@ export default function TimelineScene() {
         src={element(ART.ribbonDoodle)}
         decorative
         data-parallax="0.32"
-        className="pointer-events-none absolute -left-8 top-44 hidden w-36 -rotate-[14deg] opacity-85 sm:block"
+        className="pointer-events-none absolute -left-8 top-44 w-24 -rotate-[14deg] opacity-80 sm:w-36"
       />
       <ArtImg
         src={element(ART.driedRoses)}
         decorative
         data-parallax="0.25"
-        className="pointer-events-none absolute right-4 bottom-24 hidden w-32 rotate-[8deg] opacity-90 lift-soft md:block"
+        className="pointer-events-none absolute bottom-24 right-2 w-24 rotate-[8deg] opacity-90 lift-soft sm:right-4 sm:w-32"
       />
       <ArtImg
         src={element(ART.books)}

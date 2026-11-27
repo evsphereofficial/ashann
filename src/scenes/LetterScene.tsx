@@ -96,7 +96,7 @@ export default function LetterScene() {
         src={element(ART.pinkLetterPaper)}
         decorative
         data-parallax="0.3"
-        className="pointer-events-none absolute -left-14 top-24 hidden w-48 -rotate-[8deg] opacity-85 sm:block sm:w-56"
+        className="pointer-events-none absolute -left-12 top-24 w-32 -rotate-[8deg] opacity-80 sm:-left-14 sm:w-56"
       />
       <ArtImg
         src={element(ART.driedRoses)}
@@ -108,7 +108,7 @@ export default function LetterScene() {
         src={element(ART.redGingham)}
         decorative
         data-parallax="0.22"
-        className="pointer-events-none absolute bottom-14 right-8 hidden w-44 rotate-[6deg] opacity-80 sm:block"
+        className="pointer-events-none absolute bottom-14 right-2 w-28 rotate-[6deg] opacity-75 sm:right-8 sm:w-44"
       />
       <ArtImg
         src={element(ART.doubleHeart)}

@@ -7,7 +7,7 @@ import { assembleContainer, dropIn } from '@/lib/motion';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
 import { useChapterReveal, useParallax } from '@/components/scrapbook/ChapterSection';
 import { anniversary } from '@/content/anniversary';
-import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
+import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { PaperLayer } from '@/components/scrapbook/PaperLayer';
 import { WashiTape } from '@/components/scrapbook/WashiTape';
 import { ArtImg } from '@/components/scrapbook/ArtImg';
@@ -70,7 +70,7 @@ export default function FinaleScene() {
         src={element(ART.angelWings)}
         decorative
         data-parallax="0.18"
-        className="pointer-events-none absolute bottom-10 right-12 hidden w-40 opacity-80 lg:block"
+        className="pointer-events-none absolute bottom-10 right-4 w-24 opacity-75 sm:right-12 sm:w-40"
       />
 
       <div className="relative mx-auto w-full max-w-5xl">
@@ -128,10 +128,6 @@ export default function FinaleScene() {
                 <p className="type-serif mt-3 text-base italic text-[var(--color-ink-soft)]">
                   — <FilledOrPlaceholder value={anniversary.senderName} />
                 </p>
-              </div>
-
-              <div className="mt-5">
-                <PlaceholderTag value="[PLACEHOLDER: closing line for the two of you]" />
               </div>
 
               <div className="mt-7 flex flex-wrap gap-3">

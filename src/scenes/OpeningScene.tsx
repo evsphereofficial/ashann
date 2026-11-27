@@ -210,25 +210,25 @@ export default function OpeningScene() {
         src={element(ART.books)}
         decorative
         data-parallax="0.4"
-        className="pointer-events-none absolute bottom-6 right-6 hidden w-40 opacity-95 lift-soft lg:block"
+        className="pointer-events-none absolute bottom-6 right-2 w-24 opacity-90 lift-soft sm:right-6 sm:w-40"
       />
       <ArtImg
         src={element(ART.cornerFlourish)}
         decorative
         data-parallax="0.16"
-        className="pointer-events-none absolute right-10 top-4 w-36 opacity-70"
+        className="pointer-events-none absolute right-2 top-4 w-24 opacity-70 sm:right-10 sm:w-36"
       />
       <ArtImg
         src={element(ART.minaret)}
         decorative
         data-parallax="0.24"
-        className="pointer-events-none absolute left-4 top-12 hidden w-24 opacity-60 sm:block"
+        className="pointer-events-none absolute -left-4 top-10 w-16 opacity-55 sm:left-4 sm:top-12 sm:w-24"
       />
       <ArtImg
         src={element(ART.bowDoodle)}
         decorative
         data-parallax="0.28"
-        className="pointer-events-none absolute bottom-12 left-1/3 hidden w-16 rotate-[12deg] opacity-85 sm:block"
+        className="pointer-events-none absolute bottom-12 left-1/3 w-12 rotate-[12deg] opacity-85 sm:w-16"
       />
 
       <div className="relative mx-auto w-full max-w-6xl">
@@ -245,7 +245,7 @@ export default function OpeningScene() {
             src={frame('wamuu', 4)}
             alt="Wamuu in blue armour — supplied cut-out tucked onto the opening page."
             data-parallax="0.26"
-            className="pointer-events-none absolute -top-10 right-0 z-20 hidden h-[112%] w-[40%] object-contain object-right-top opacity-95 drop-shadow-[0_18px_22px_rgb(18_48_56/0.35)] lg:block"
+            className="pointer-events-none absolute -right-4 -top-6 z-20 w-28 object-contain object-right-top opacity-95 drop-shadow-[0_14px_18px_rgb(18_48_56/0.35)] sm:w-36 lg:-top-10 lg:right-0 lg:h-[112%] lg:w-[40%]"
           />
 
           <div className="grid items-start gap-6 lg:grid-cols-[1.3fr_1fr]">
@@ -266,7 +266,7 @@ export default function OpeningScene() {
                   src={element(ART.ginghamNote)}
                   decorative
                   data-parallax="0.14"
-                  className="pointer-events-none absolute -bottom-8 -left-6 hidden w-32 rotate-[-9deg] opacity-95 lift-soft sm:block"
+                  className="pointer-events-none absolute -bottom-6 -left-4 w-20 rotate-[-9deg] opacity-90 lift-soft sm:-bottom-8 sm:-left-6 sm:w-32"
                 />
 
                 <p data-reveal="write" className="type-label text-[11px] text-[var(--pal-accent,var(--color-valentine))]">
@@ -295,19 +295,19 @@ export default function OpeningScene() {
                   <li data-reveal="pop" className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
                     <span className="type-label block text-[10px] text-[var(--color-valentine)]">TAP</span>
                     <span className="text-sm text-[var(--color-ink-soft)]">
-                      Every object answers when you tap it.
+                      *TAP TAP TAP* Its self explanatory idiot
                     </span>
                   </li>
                   <li data-reveal="pop" data-reveal-delay="0.08" className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
                     <span className="type-label block text-[10px] text-[var(--color-valentine)]">DRAG</span>
                     <span className="text-sm text-[var(--color-ink-soft)]">
-                      Or move things with the arrow keys.
+                      AGAIN. SELF FUCKING EXPLANATORY
                     </span>
                   </li>
                   <li data-reveal="pop" data-reveal-delay="0.16" className="rounded-[8px] border border-[#e0d2b8] bg-white/70 p-3">
                     <span className="type-label block text-[10px] text-[var(--color-valentine)]">ESCAPE</span>
                     <span className="text-sm text-[var(--color-ink-soft)]">
-                      Closes anything you have opened.
+                      It closes stuff ( ; ` Д´)
                     </span>
                   </li>
                 </ul>
@@ -321,7 +321,7 @@ export default function OpeningScene() {
                   src={element(ART.pocketWatch)}
                   decorative
                   data-parallax="0.3"
-                  className="pointer-events-none absolute -right-6 -top-10 z-20 hidden w-24 rotate-[12deg] lift-soft sm:block"
+                  className="pointer-events-none absolute -right-3 -top-7 z-20 w-16 rotate-[12deg] lift-soft sm:-right-6 sm:-top-10 sm:w-24"
                 />
                 <Polaroid
                   src={memories[0].image}
@@ -394,7 +394,7 @@ export default function OpeningScene() {
         src={element(ART.redStar)}
         decorative
         data-parallax="0.3"
-        className="pointer-events-none absolute left-6 top-24 hidden w-11 -rotate-[10deg] sm:block"
+        className="pointer-events-none absolute left-3 top-20 w-9 -rotate-[10deg] sm:left-6 sm:top-24 sm:w-11"
       />
     </div>
   );

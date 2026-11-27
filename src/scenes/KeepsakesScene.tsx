@@ -235,7 +235,7 @@ function RibbonDrawerPage() {
             src={element(ART.ginghamNote)}
             decorative
             data-parallax="0.18"
-            className="pointer-events-none absolute -right-6 bottom-8 hidden w-32 rotate-[8deg] opacity-90 lift-soft sm:block"
+            className="pointer-events-none absolute -right-4 bottom-8 w-20 rotate-[8deg] opacity-85 lift-soft sm:-right-6 sm:w-32"
           />
           <ArtImg
             src={element(ART.tornNewsEdge)}
@@ -247,7 +247,7 @@ function RibbonDrawerPage() {
             src={element(ART.cornerFlourish)}
             decorative
             data-parallax="0.15"
-            className="pointer-events-none absolute left-6 top-12 hidden w-24 opacity-65 sm:block"
+            className="pointer-events-none absolute left-2 top-10 w-16 opacity-60 sm:left-6 sm:top-12 sm:w-24"
           />
         </>
       }
@@ -387,7 +387,7 @@ function UnderTheCloudsPage() {
             src={element(ART.streetLamp)}
             decorative
             data-parallax="0.18"
-            className="pointer-events-none absolute bottom-4 right-8 hidden w-24 opacity-80 sm:block"
+            className="pointer-events-none absolute bottom-4 right-2 w-16 opacity-75 sm:right-8 sm:w-24"
           />
         </>
       }
@@ -482,7 +482,7 @@ function VelvetGiftBoxPage() {
             src={element(ART.crownDoodle)}
             decorative
             data-parallax="0.25"
-            className="pointer-events-none absolute left-6 top-16 hidden w-16 -rotate-[10deg] opacity-85 sm:block"
+            className="pointer-events-none absolute left-3 top-14 w-12 -rotate-[10deg] opacity-80 sm:left-6 sm:top-16 sm:w-16"
           />
           <ArtImg
             src={element(ART.doubleHeart)}
@@ -494,7 +494,7 @@ function VelvetGiftBoxPage() {
             src={element(ART.bowDoodle)}
             decorative
             data-parallax="0.2"
-            className="pointer-events-none absolute bottom-10 left-8 hidden w-20 -rotate-[8deg] opacity-85 sm:block"
+            className="pointer-events-none absolute bottom-8 left-4 w-14 -rotate-[8deg] opacity-80 sm:bottom-10 sm:left-8 sm:w-20"
           />
         </>
       }
@@ -593,7 +593,7 @@ function BotanicalPocketPage() {
             src={element(ART.tornLinedCorner)}
             decorative
             data-parallax="0.16"
-            className="pointer-events-none absolute -left-8 top-24 hidden w-32 opacity-80 sm:block"
+            className="pointer-events-none absolute -left-6 top-20 w-20 opacity-75 sm:-left-8 sm:top-24 sm:w-32"
           />
         </>
       }
@@ -670,7 +670,7 @@ function FilmReelPage() {
             src={element(ART.pocketWatch)}
             decorative
             data-parallax="0.3"
-            className="pointer-events-none absolute right-6 top-16 hidden w-24 opacity-90 lift-soft sm:block sm:w-28"
+            className="pointer-events-none absolute right-2 top-14 w-16 opacity-90 lift-soft sm:right-6 sm:top-16 sm:w-28"
           />
           <ArtImg
             src={background(PAPER.blackGingham)}
@@ -768,7 +768,7 @@ function SecretStarPage() {
             src={element(ART.blankNotepaper)}
             decorative
             data-parallax="0.18"
-            className="pointer-events-none absolute -right-10 bottom-10 hidden w-36 rotate-[8deg] opacity-85 sm:block"
+            className="pointer-events-none absolute -right-6 bottom-8 w-24 rotate-[8deg] opacity-80 sm:-right-10 sm:bottom-10 sm:w-36"
           />
         </>
       }

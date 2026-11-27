@@ -218,25 +218,25 @@ export default function CoverScene() {
         src={element(ART.books)}
         decorative
         data-parallax="0.2"
-        className="pointer-events-none absolute -left-8 bottom-24 hidden w-36 -rotate-[8deg] opacity-85 lift-soft md:block"
+        className="pointer-events-none absolute -left-6 bottom-20 w-24 -rotate-[8deg] opacity-80 lift-soft sm:-left-8 sm:bottom-24 sm:w-36"
       />
       <ArtImg
         src={element(ART.redLily)}
         decorative
         data-parallax="0.42"
-        className="pointer-events-none absolute bottom-16 left-2 w-20 -rotate-[10deg] opacity-90 lift-soft sm:bottom-10 sm:left-14 sm:w-32"
+        className="pointer-events-none absolute bottom-8 left-2 w-18 -rotate-[10deg] opacity-90 lift-soft sm:bottom-10 sm:left-14 sm:w-32"
       />
       <ArtImg
         src={element(ART.doubleHeart)}
         decorative
         data-parallax="0.3"
-        className="pointer-events-none absolute bottom-20 right-4 w-16 rotate-[8deg] opacity-90 sm:right-16 sm:w-28"
+        className="pointer-events-none absolute bottom-20 right-3 w-16 rotate-[8deg] opacity-90 sm:right-16 sm:w-28"
       />
       <ArtImg
         src={element(ART.pocketWatch)}
         decorative
         data-parallax="0.22"
-        className="pointer-events-none absolute left-6 top-1/3 hidden w-28 -rotate-[8deg] opacity-85 lift-soft lg:block"
+        className="pointer-events-none absolute -left-4 top-28 w-16 -rotate-[8deg] opacity-80 lift-soft sm:left-6 sm:top-1/3 sm:w-28"
       />
 
       <div className="stage-clip relative z-10 mx-auto w-full max-w-[390px] md:max-w-[52rem]">

@@ -5,7 +5,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { characters } from '@/content/characters';
 import { keepsakes } from '@/content/keepsakes';
 import { useScrapbook } from '@/components/scrapbook/ScrapbookContext';
-import { FilledOrPlaceholder, PlaceholderTag } from '@/components/scrapbook/PlaceholderTag';
+import { FilledOrPlaceholder } from '@/components/scrapbook/PlaceholderTag';
 import { useFocusTrap } from './FocusTrap';
 
 /**
@@ -158,15 +158,11 @@ export function DetailSheet() {
               </div>
             ) : null}
 
-            {character ? (
+            {character && character.quote ? (
               <blockquote className="mt-4 border-l-4 border-[var(--color-blush)] pl-3">
-                {character.quote ? (
-                  <p className="type-serif italic">“{character.quote}”</p>
-                ) : (
-                  <PlaceholderTag value="[PLACEHOLDER: add a quote]" />
-                )}
+                <p className="type-serif italic">“{character.quote}”</p>
                 <footer className="mt-2 text-xs text-[var(--color-ink-soft)]">
-                  No canon line is quoted here — only add text you can attribute.
+                  {character.name} · {character.part}
                 </footer>
               </blockquote>
             ) : null}
