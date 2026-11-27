@@ -53,13 +53,13 @@ export const FILM_FRAME_LINES = [
   "I love you man",
 ] as const;
 
-/** Chapter 06 — the letter, built from the client's own words. */
+/** Chapter 06 — the letter, exact text from Natalie. */
 export const letter: LetterContent = {
-  greeting: "Hey idiot ♡,",
+  greeting: "Hey baby,",
   paragraphs: [
-    "You're the closest I've ever gotten to someone, or someone got close to me. Never EVER felt safer with anyone like that.",
-    "From \"Are you a father\" on 22nd June to Krikentines day, 26th October, and every late-night joke since — EVERY single day has been nothing but pure bliss (ﾉ_・、).",
-    "Please baby, take care of yourself. I could go on and on about how much I love you, but it would never be enough. I'll find you in every lifetime♡ (P.S. Thats a threat).",
+    "I still remember how October went. It was eating my literal heart out, knowing that I love you so much and yet I couldn't possibly imagine you getting together with someone like ME and yet here we are ( 〃▽〃)",
+    "I truly dont think that you'll ever understand your true worth baby. You're worth more than anything that anyone could ever amount to, you're nowhere even CLOSE to being replaceable, there's nobody like you. Nothing and nobody could make me replicate the way I feel when Im talking to you, you mean more than what words could possibly describe. It litreally would be insulting if I used petty words to describe my love for you (/´△`＼)",
+    "Im so lucky to be your girlfriend, don't let anything make you think otherwise. Somedays, I may not be the BEST but I really try to make you understand how loved you are that even days without you feel like decades. I genuinely wonder whether I'm enough for you. What did I do for you?",
   ],
-  signature: "— Always yours, Ash",
+  signature: "-Natalie",
 };

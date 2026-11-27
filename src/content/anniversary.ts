@@ -8,7 +8,7 @@ export const anniversary = {
   coverInviteTitle: "The happiest six months of my LIFE",
   coverInviteSubtitle: "Small token for everything you could POSSIBLY mean to me",
   recipientName: "My favourite idiot ♡",
-  senderName: "Ash",
+  senderName: "Natalie",
   dateLine: "22nd June · Six Months Together",
   subtitle: "\"I'll find you in every lifetime♡\" (P.S. Thats a threat)",
   coverHint: "Everything on these pages can be touched.",
